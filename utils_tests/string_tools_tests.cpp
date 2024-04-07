@@ -1,3 +1,4 @@
+#pragma clang diagnostic ignored "-Woverloaded-shift-op-parentheses"
 #include "../doctest.h"
 #include "../utils/utils.h"
 
@@ -77,14 +78,17 @@ TEST_CASE("Testing string_to_vector_type function.")
 	SUBCASE("String to vector of strings.")
 	{
 		std::string input_str{ " text , other with spaces ,something" };
-		std::vector<std::string> output_str_no_spaces{ " text ", " other with spaces ", "something" };
+		std::vector<std::string>
+			output_str_no_spaces{ " text ", " other with spaces ", "something" };
 		CHECK(utils::string_to_vector_type<std::string>(input_str, ",")
 			== output_str_no_spaces);
 	}
-	SUBCASE("String to vector of strings removing white spaces before and after lettres.")
+	SUBCASE(
+		"String to vector of strings removing white spaces before and after lettres.")
 	{
 		std::string input_str{ " text , other with spaces ,something" };
-		std::vector<std::string> output_str_no_spaces{ "text", "other with spaces", "something" };
+		std::vector<std::string>
+			output_str_no_spaces{ "text", "other with spaces", "something" };
 		CHECK(utils::string_to_vector_type<std::string>(input_str, ",", true)
 			== output_str_no_spaces);
 	}

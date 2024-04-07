@@ -1,3 +1,4 @@
+#pragma clang diagnostic ignored "-Woverloaded-shift-op-parentheses"
 #include "../doctest.h"
 #include "../utils/utils.h"
 
