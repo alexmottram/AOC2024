@@ -14,6 +14,7 @@ namespace utils
 		long long y;
 
 		friend bool operator<(Vec2D const& lhs, Vec2D const& rhs);
+		friend bool operator>(Vec2D const& lhs, Vec2D const& rhs);
 
 		friend bool operator==(Vec2D const& lhs, Vec2D const& rhs);
 

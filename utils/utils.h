@@ -7,3 +7,5 @@
 #include "std_extensions.h"
 #include "maths_tools.h"
 #include "vector_tools.h"
+#include "string_tools.h"
+#include "array_template.h"

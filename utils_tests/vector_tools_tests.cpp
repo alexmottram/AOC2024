@@ -38,4 +38,9 @@ TEST_CASE("Testing factorial function.")
 		CHECK_FALSE(vec_a == vec_b);
 	}
 
+	SUBCASE("Testing vector greater than.")
+	{
+		CHECK(vec_a > vec_b);
+	}
+
 }
