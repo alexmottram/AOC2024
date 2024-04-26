@@ -8,7 +8,7 @@ set(utils
     utils/string_tools.cpp utils/string_tools.h
     utils/maths_tools.cpp utils/maths_tools.h
     utils/vector_tools.cpp utils/vector_tools.h
-    utils/array_template.h
+    utils/array_template.cpp utils/array_template.h
     )
 
 set(unittests

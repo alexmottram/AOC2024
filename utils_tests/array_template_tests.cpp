@@ -9,7 +9,7 @@ struct VectorsAndInt {
     int val;
 };
 
-TEST_CASE("Testing array with ints.")
+TEST_CASE("Testing basic features of array with ints.")
 {
     utils::Array2D<int>
             int_array{{{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12}}};
@@ -58,20 +58,19 @@ TEST_CASE("Testing equality operations with an array with ints.")
 
     SUBCASE("Test equality operation.") {
         SUBCASE("Arrays are equal.") {
-            CHECK(int_array_org == int_array_same);
+            CHECK(int_array_org==int_array_same);
         }
 
         SUBCASE("Arrays have different sizes.") {
-            CHECK(int_array_org != int_array_different_size);
+            CHECK(int_array_org!=int_array_different_size);
         }
 
         SUBCASE("Arrays have different values.") {
-            CHECK(int_array_org != int_array_different_values);
+            CHECK(int_array_org!=int_array_different_values);
         }
 
     }
 }
-
 
 TEST_CASE("Testing changing values in an array.")
 {
@@ -83,8 +82,60 @@ TEST_CASE("Testing changing values in an array.")
         int_array.at(1, 2) = 20;
         CHECK(int_array.at(1, 2)==20);
     }
+}
 
-    SUBCASE("Testing out inbuilt iterator.") {
-        CHECK(int_array.at(1, 2)==10);
+TEST_CASE("Testing base array iterator.")
+{
+    utils::Array2D<int> int_array{{{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12}}};
+
+    SUBCASE("Accessing values using the iterator.") {
+        int expected_value{1};
+        for (auto x : int_array) {
+            CHECK(x==expected_value);
+            expected_value++;
+        }
+    }
+
+    SUBCASE("Double value in iterator and testing the array is still doubled after.") {
+        int expected_value{2};
+        for (auto& x : int_array) {
+            x = x*2;
+            CHECK(x==expected_value);
+            expected_value += 2;
+        }
+
+        int expected_value_after{2};
+        for (auto x : int_array) {
+            CHECK(x==expected_value_after);
+            expected_value_after += 2;
+        }
+    }
+}
+
+TEST_CASE("Testing base array iterator.")
+{
+    utils::Array2D<int> int_array{{{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12}}};
+
+    SUBCASE("Accessing values using the iterator.") {
+        int expected_value{1};
+        for (auto x : int_array) {
+            CHECK(x==expected_value);
+            expected_value++;
+        }
+    }
+
+    SUBCASE("Double value in iterator and testing the array is still doubled after.") {
+        int expected_value{2};
+        for (auto& x : int_array) {
+            x = x*2;
+            CHECK(x==expected_value);
+            expected_value += 2;
+        }
+
+        int expected_value_after{2};
+        for (auto x : int_array) {
+            CHECK(x==expected_value_after);
+            expected_value_after += 2;
+        }
     }
 }

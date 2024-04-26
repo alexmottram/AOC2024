@@ -4,8 +4,15 @@
 #pragma once
 
 #include "precompile_header.h"
+#include "vector_tools.h"
 
 namespace utils {
+    template<typename T>
+    class Array2D;
+
+    // Forward assign Array operators
+    template<typename T>
+    std::ostream& operator<<(std::ostream& os, const Array2D<T>& a);
 
     template<class T>
     class Array2D {
@@ -63,13 +70,25 @@ namespace utils {
             return size_y;
         }
 
-        friend bool operator< <T>(Array2D<T> const& lhs, Array2D<T> const& rhs);
+        friend bool operator<(Array2D<T> const& lhs, Array2D<T> const& rhs)
+        {
+            return (
+                    (lhs.size()<rhs.size())
+                            || ((lhs.size()==rhs.size()) && (lhs.data<rhs.data))
+            );
+        }
 
-        friend bool operator== <T>(Array2D<T> const& lhs, Array2D<T> const& rhs);
+        friend bool operator==(Array2D<T> const& lhs, Array2D<T> const& rhs)
+        {
+            return (lhs.get_size_x()==rhs.get_size_x())
+                    && (lhs.get_size_y()==rhs.get_size_y())
+                    && (lhs.data==rhs.data);
+        }
 
-        friend std::ostream& operator<< <T>(
-                std::ostream& os,
-                const Array2D<T>& a
+        friend std::ostream& operator
+        <<<T>(
+        std::ostream& os,
+        const Array2D<T>& a
         );
 
         // Standard vector based begin and ends
@@ -154,23 +173,6 @@ namespace utils {
             throw std::invalid_argument("X value outside of range");
         }
     }
-
-    template<class T>
-    bool operator<(Array2D<T> const& lhs, Array2D<T> const& rhs)
-    {
-        return (
-                (lhs.size()<rhs.size())
-                || ((lhs.size()==rhs.size()) && (lhs.data<rhs.data))
-                );
-    };
-
-    template<class T>
-    bool operator==(Array2D<T> const& lhs, Array2D<T> const& rhs)
-    {
-        return (lhs.get_size_x()==rhs.get_size_x())
-                && (lhs.get_size_y()==rhs.get_size_y())
-                && (lhs.data==rhs.data);
-    };
 
     template<class T>
     std::ostream& operator<<(std::ostream& os, const Array2D<T>& a)
