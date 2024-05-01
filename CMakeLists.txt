@@ -9,6 +9,7 @@ set(utils
     utils/maths_tools.cpp utils/maths_tools.h
     utils/vector_tools.cpp utils/vector_tools.h
     utils/array_template.cpp utils/array_template.h
+    utils/array_template.h
     )
 
 set(unittests
@@ -17,7 +18,8 @@ set(unittests
     utils_tests/vector_tools_tests.cpp
     utils_tests/string_tools_tests.cpp
     utils_tests/array_template_tests.cpp
-    )
+    utils/array_iterators.h
+)
 
 set(CMAKE_CXX_STANDARD 20)
 add_executable(AOC-Utils main.cpp "${utils}")

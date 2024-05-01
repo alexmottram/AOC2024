@@ -14,6 +14,195 @@ namespace utils {
     template<typename T>
     std::ostream& operator<<(std::ostream& os, const Array2D<T>& a);
 
+//    template<class T>
+//    class Row {
+//    public:
+//        Array2D<T>* array_ref{};
+//        size_t row_num{};
+//
+//        explicit Row(Array2D<T>* array_ref);
+//
+//        size_t size()
+//        {
+//            return array_ref->get_size_x();
+//        }
+//
+//        // Standard vector based begin and ends
+//        auto begin()
+//        {
+//            return array_ref->data.begin()+(row_num*size());
+//        }
+//
+//        auto end()
+//        {
+//            return array_ref->data.begin()+((row_num+1)*size());
+//        }
+//
+//        auto begin() const
+//        {
+//            return array_ref->data.begin()+(row_num+*size());
+//        }
+//
+//        auto end() const
+//        {
+//            return array_ref->data.begin()+ +((row_num+1)*size());
+//        }
+//
+//    };
+//
+//    template<class T>
+//    Row<T>::Row(Array2D<T>* array_ref)
+//    {
+//        this->array_ref = array_ref;
+//        this->row_num = 1;
+//
+//    }
+
+
+    template<class T>
+    struct Row {
+        // Iterator tags here...
+
+        // Iterator constructors here...
+        Row(T* ptr, Array2D<T>* array_ptr)
+                :m_ptr(ptr), m_array_ptr(array_ptr) { }
+
+        T& operator*() const { return *m_ptr; }
+
+        T* operator->() { return m_ptr; }
+
+        // Prefix increment
+        T& operator++()
+        {
+            m_ptr++;
+            return *m_ptr;
+        }
+
+        // Postfix increment
+        T operator++(int)
+        {
+            T tmp = *this;
+            ++(*this);
+            return tmp;
+        }
+
+        friend bool operator==(const Row& a, const Row& b)
+        {
+            return a.m_ptr==b.m_ptr;
+        };
+
+        friend bool operator!=(const Row& a, const Row& b)
+        {
+            return a.m_ptr!=b.m_ptr;
+        };
+
+        auto row_start()
+        {
+            return m_ptr;
+        }
+
+        auto row_end()
+        {
+            return row_start()+(m_array_ptr->get_size_x());
+        }
+
+        auto begin()
+        {
+            return Row<T>(row_start(), m_array_ptr);
+        }
+
+        auto end()
+        {
+            return Row<T>(row_end(), m_array_ptr);
+        }
+
+        auto begin() const
+        {
+            return Row<T>(row_start(), m_array_ptr);
+        }
+
+        auto end() const
+        {
+            return Row<T>(row_end(), m_array_ptr);
+        }
+
+    private:
+        Array2D<T>* m_array_ptr;
+        T* m_ptr;
+    };
+
+    template<class T>
+    struct RowIterator {
+        // Iterator tags here...
+
+        // Iterator constructors here...
+        RowIterator(T* ptr, Array2D<T>* array_ptr)
+                :m_ptr(ptr), m_array_ptr(array_ptr) { }
+
+        Row<T> operator*() const { return Row<T>{m_ptr, m_array_ptr}; }
+
+        Row<T>* operator->() { return Row<T>{m_ptr, m_array_ptr}; }
+
+        // Prefix increment
+        Row<T> operator++()
+        {
+            m_ptr += m_array_ptr->get_size_x();
+            return Row<T>{m_ptr, m_array_ptr};
+        }
+
+        // Postfix increment
+        Row<T> operator++(int)
+        {
+            Row<T> tmp = Row<T>{m_ptr, m_array_ptr};
+            (*this) += m_array_ptr->get_size_x();
+            return tmp;
+        }
+
+        friend bool operator==(const RowIterator& a, const RowIterator& b)
+        {
+            return a.m_ptr==b.m_ptr;
+        };
+
+        friend bool operator!=(const RowIterator& a, const RowIterator& b)
+        {
+            return a.m_ptr!=b.m_ptr;
+        };
+
+        auto row_iterator_begin()
+        {
+            return &(*m_array_ptr->begin());
+        }
+
+        auto row_iterator_end()
+        {
+            return &(*m_array_ptr->end());
+        }
+
+        auto begin()
+        {
+            return RowIterator<T>(row_iterator_begin(), m_array_ptr);
+        }
+
+        auto end()
+        {
+            return RowIterator<T>(row_iterator_end(), m_array_ptr);
+        }
+
+        auto begin() const
+        {
+            return RowIterator<T>(row_iterator_begin(), m_array_ptr);
+        }
+
+        auto end() const
+        {
+            return RowIterator<T>(row_iterator_end(), m_array_ptr);
+        }
+
+    private:
+        Array2D<T>* m_array_ptr;
+        T* m_ptr;
+    };
+
     template<class T>
     class Array2D {
     public:
@@ -112,6 +301,9 @@ namespace utils {
             return data.end();
         }
 
+        // Row iterator
+        RowIterator<T> row_iter();
+
     private:
         VecType data{};
         size_t size_x{};
@@ -134,6 +326,12 @@ namespace utils {
         }
 
     };
+
+    template<class T>
+    RowIterator<T> Array2D<T>::row_iter()
+    {
+        return RowIterator<T>{&data[0], this};
+    }
 
     template<class T>
     Array2D<T>::Array2D(const DualVecType& input_data)

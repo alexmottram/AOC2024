@@ -112,30 +112,53 @@ TEST_CASE("Testing base array iterator.")
     }
 }
 
-TEST_CASE("Testing base array iterator.")
+TEST_CASE("Testing row first iterator.")
 {
     utils::Array2D<int> int_array{{{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12}}};
+    utils::Array2D<int> int_array_2{{{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12}}};
 
     SUBCASE("Accessing values using the iterator.") {
         int expected_value{1};
-        for (auto x : int_array) {
-            CHECK(x==expected_value);
-            expected_value++;
+        int num_rows {0};
+        for (auto row : int_array.row_iter()) {
+            for (int x : row) {
+                CHECK(expected_value==x);
+                expected_value++;
+            }
+            num_rows ++;
         }
+        CHECK(num_rows==3);
     }
 
-    SUBCASE("Double value in iterator and testing the array is still doubled after.") {
-        int expected_value{2};
-        for (auto& x : int_array) {
-            x = x*2;
-            CHECK(x==expected_value);
-            expected_value += 2;
-        }
+    SUBCASE("Row iterator performs basic functions.") {
+        auto it = int_array_2.row_iter();
+        auto it_2 = int_array_2.row_iter();
+        CHECK(it==it_2);
 
-        int expected_value_after{2};
-        for (auto x : int_array) {
-            CHECK(x==expected_value_after);
-            expected_value_after += 2;
-        }
     }
+
+//    SUBCASE("Double value in iterator and testing the array is still doubled after.") {
+//        int expected_value{2};
+//        for (auto& x : int_array.row_iter()) {
+//            x = x*2;
+//            CHECK(x==expected_value);
+//            expected_value += 2;
+//        }
+//
+//        int expected_value_after{2};
+//        for (auto x : int_array) {
+//            CHECK(x==expected_value_after);
+//            expected_value_after += 2;
+//        }
+//    }
+//    SUBCASE("Accessing values using the iterator.") {
+//        int expected_value{1};
+//        for (auto& row : int_array.row_iter()) {
+//            for (auto& x : row) {
+//                CHECK(x==expected_value);
+//                expected_value++;
+//            }
+//        }
+//    }
+
 }

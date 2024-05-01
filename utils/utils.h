@@ -9,3 +9,4 @@
 #include "vector_tools.h"
 #include "string_tools.h"
 #include "array_template.h"
+#include "array_iterators.h"
