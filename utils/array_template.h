@@ -10,16 +10,41 @@
 namespace utils {
     template<typename T>
     class Array2D;
+    template<typename T>
+    class NodeWrapper;
 
     // Forward assign Array operators
     template<typename T>
     std::ostream& operator<<(std::ostream& os, const Array2D<T>& a);
+    template<typename T>
+    std::ostream& operator<<(std::ostream& os, const NodeWrapper<T>& nw);
+
+    template<class T>
+    class NodeWrapper {
+    public:
+        T& value;
+        const long long x;
+        const long long y;
+
+        NodeWrapper(T& value, long long x, long long y);
+
+        friend std::ostream& operator<< <T>(std::ostream& os, const NodeWrapper<T>& nw);
+
+        Vec2D vector() { return Vec2D{x, y}; };
+
+    };
+
+    template<class T>
+    NodeWrapper<T>::NodeWrapper(
+            T& value, long long int x, long long int y)
+            :value(value), x(x), y(y) { }
 
     template<class T>
     class Array2D {
     public:
         using VecType = std::vector<T>;
         using DualVecType = std::vector<VecType>;
+
         explicit Array2D(const DualVecType& input_data);
 
         template<typename IdxT>
@@ -28,6 +53,15 @@ namespace utils {
             auto x_long = static_cast<long long> (x);
             auto y_long = static_cast<long long> (y);
             return at_cardinal(x_cardinal(x_long), y_cardinal(y_long));
+        }
+
+        template<typename IdxT>
+        NodeWrapper<T> node_at(IdxT x, IdxT y)
+        {
+            auto x_long = static_cast<long long> (x);
+            auto y_long = static_cast<long long> (y);
+            auto& val = at_cardinal(x_cardinal(x_long), y_cardinal(y_long));
+            return NodeWrapper<T>{val, x_long, y_long};
         }
 
         T& at(Vec2D vec)
@@ -85,11 +119,7 @@ namespace utils {
                     && (lhs.data==rhs.data);
         }
 
-        friend std::ostream& operator
-        <<<T>(
-        std::ostream& os,
-        const Array2D<T>& a
-        );
+        friend std::ostream& operator<<<T>(std::ostream& os, const Array2D<T>& a);
 
         // Standard vector based begin and ends
         auto begin()
@@ -184,19 +214,42 @@ namespace utils {
     }
 
     template<class T>
+    std::ostream& operator<<(std::ostream& os, const NodeWrapper<T>& nw)
+    {
+        os << "NodeWrapper{x=" << nw.x << " ,y=" << nw.y;
+        os << " ,value=" << nw.value << "}";
+        return os;
+    }
+
+    template<class T>
     std::ostream& operator<<(std::ostream& os, const Array2D<T>& a)
     {
+
+        size_t max_len {0};
+        for (auto x: a){
+            std::stringstream ss;
+            ss << x;
+            size_t str_len {0};
+            str_len = ss.str().length();
+            if (str_len > max_len) {
+                max_len = str_len;
+            }
+        }
+
         for (auto i{0}; i<a.data.size(); i++) {
             // Pre value insert
             if (i%a.size_x==0) {
-                os << "[";
+                os << "|";
             }
             // Value insert
-            os << a.data.at(i);
+            std::stringstream ss;
+            ss << a.data.at(i);
+            os.fill(' ');
+            os << std::setw(max_len) << ss.str();
 
             // Post value insert
             if ((i+1)%a.size_x==0) {
-                os << "]\n";
+                os << "|\n";
             }
             else {
                 os << ",";

@@ -2,6 +2,8 @@
 #include "../doctest.h"
 #include "../utils/utils.h"
 
+TEST_SUITE_BEGIN("Maths tools test suite.");
+
 TEST_CASE("Testing factorial function.")
 {
 	CHECK(utils::factorial(0) == 1);
@@ -18,4 +20,6 @@ TEST_CASE("Testing n choose r function.")
 	CHECK(utils::nCr(5, 1) == 5);
 	CHECK(utils::nCr(5, 2) == 10);
 }
+
+TEST_SUITE_END;
 

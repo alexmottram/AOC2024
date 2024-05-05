@@ -2,7 +2,9 @@
 #include "../doctest.h"
 #include "../utils/utils.h"
 
-TEST_CASE("Testing factorial function.")
+TEST_SUITE_BEGIN("Vector tools test suite.");
+
+TEST_CASE("Testing 2d vector class Vec2D.")
 {
 	utils::Vec2D vec_a{ 6, 5 };
 	utils::Vec2D vec_b{ -2, -10 };
@@ -45,3 +47,4 @@ TEST_CASE("Testing factorial function.")
 	}
 
 }
+TEST_SUITE_END;

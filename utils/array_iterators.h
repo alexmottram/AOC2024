@@ -7,12 +7,18 @@
 #include "vector_tools.h"
 
 namespace utils {
-    template<typename T>
-    class Array2D;
 
-    // Forward assign Array operators
     template<typename T>
-    std::ostream& operator<<(std::ostream& os, const Array2D<T>& a);
+    struct Row;
+    template<typename T>
+    struct RowIterator;
+
+    // Forward assign operators (mainly ostream)
+    template<typename T>
+    std::ostream& operator<<(std::ostream& os, const Row<T>& r);
+    template<typename T>
+    std::ostream& operator<<(std::ostream& os, const RowIterator<T>& ri);
+
 
     template<class T>
     struct Row {
@@ -56,6 +62,8 @@ namespace utils {
         {
             return a.m_ptr!=b.m_ptr;
         };
+
+        friend std::ostream& operator << <T>(std::ostream& os, const Row<T>& r);
 
         auto row_end() { return row_start+row_size; }
 
@@ -117,6 +125,8 @@ namespace utils {
             return a.m_ptr!=b.m_ptr;
         };
 
+        friend std::ostream& operator << <T>(std::ostream& os, const RowIterator<T>& ri);
+
         auto row_iterator_begin()
         {
             return &(*m_vector_ptr->begin());
@@ -152,4 +162,22 @@ namespace utils {
         std::vector<T>* m_vector_ptr;
         const size_t row_size;
     };
+
+    // Implement << operator methods
+
+    template<class T>
+    std::ostream& operator<<(std::ostream& os, const Row<T>& r)
+    {
+        os << "Row{start=" << r.row_start << ", current=" << *r;
+        os << ", len="<< r.row_size << "}";
+        return os;
+    }
+
+
+    template<class T>
+    std::ostream& operator<<(std::ostream& os, const RowIterator<T>& ri)
+    {
+        os << "RowIterator{current=" << *ri << ", len="<< ri.row_size << "}";
+        return os;
+    }
 }

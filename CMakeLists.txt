@@ -18,7 +18,7 @@ set(unittests
     utils_tests/vector_tools_tests.cpp
     utils_tests/string_tools_tests.cpp
     utils_tests/array_template_tests.cpp
-    utils/array_iterators.h
+    utils_tests/array_template_iterator_tests.cpp
 )
 
 set(CMAKE_CXX_STANDARD 20)

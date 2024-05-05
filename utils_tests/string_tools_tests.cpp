@@ -2,6 +2,8 @@
 #include "../doctest.h"
 #include "../utils/utils.h"
 
+TEST_SUITE_BEGIN("String tools test suite.");
+
 TEST_CASE("Testing string strip white space function.")
 {
 	CHECK(utils::strip_white_space(std::string("      text   ")) == "text");
@@ -114,3 +116,5 @@ TEST_CASE("Testing string_to_vector_type function.")
 		CHECK(utils::string_to_vector_type<size_t>(input_str, ",") == size_t_num);
 	}
 }
+
+TEST_SUITE_END;
