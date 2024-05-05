@@ -5,6 +5,7 @@
 
 #include "precompile_header.h"
 #include "vector_tools.h"
+#include "array_utils.h"
 #include "array_iterators.h"
 
 namespace utils {
@@ -16,28 +17,6 @@ namespace utils {
     // Forward assign Array operators
     template<typename T>
     std::ostream& operator<<(std::ostream& os, const Array2D<T>& a);
-    template<typename T>
-    std::ostream& operator<<(std::ostream& os, const NodeWrapper<T>& nw);
-
-    template<class T>
-    class NodeWrapper {
-    public:
-        T& value;
-        const long long x;
-        const long long y;
-
-        NodeWrapper(T& value, long long x, long long y);
-
-        friend std::ostream& operator<< <T>(std::ostream& os, const NodeWrapper<T>& nw);
-
-        Vec2D vector() { return Vec2D{x, y}; };
-
-    };
-
-    template<class T>
-    NodeWrapper<T>::NodeWrapper(
-            T& value, long long int x, long long int y)
-            :value(value), x(x), y(y) { }
 
     template<class T>
     class Array2D {
