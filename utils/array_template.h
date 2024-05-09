@@ -11,6 +11,7 @@
 namespace utils {
     template<typename T>
     class Array2D;
+
     template<typename T>
     class NodeWrapper;
 
@@ -21,13 +22,25 @@ namespace utils {
     template<class T>
     class Array2D {
     public:
-        using VecType = std::vector<T>;
+        typedef T value_type;
+        typedef T* pointer;
+        typedef const T* const_pointer;
+        typedef T& reference;
+        typedef const T& const_reference;
+        typedef std::vector<value_type>::iterator iterator;
+        typedef std::vector<value_type>::const_iterator const_iterator;
+        typedef std::reverse_iterator<const_iterator> const_reverse_iterator;
+        typedef std::reverse_iterator<iterator> reverse_iterator;
+        typedef size_t size_type;
+        typedef ptrdiff_t difference_type;
+
+        using VecType = std::vector<value_type>;
         using DualVecType = std::vector<VecType>;
 
         explicit Array2D(const DualVecType& input_data);
 
         template<typename IdxT>
-        T& at(IdxT x, IdxT y)
+        reference at(IdxT x, IdxT y)
         {
             auto x_long = static_cast<long long> (x);
             auto y_long = static_cast<long long> (y);
@@ -35,7 +48,7 @@ namespace utils {
         }
 
         template<typename IdxT>
-        NodeWrapper<T> node_at(IdxT x, IdxT y)
+        NodeWrapper<value_type> node_at(IdxT x, IdxT y)
         {
             auto x_long = static_cast<long long> (x);
             auto y_long = static_cast<long long> (y);
@@ -43,12 +56,12 @@ namespace utils {
             return NodeWrapper<T>{val, x_long, y_long};
         }
 
-        T& at(Vec2D vec)
+        reference at(Vec2D vec)
         {
             return at(vec.x, vec.y);
         }
 
-        [[nodiscard]] size_t index_to_x_cardinal(size_t index) const
+        [[nodiscard]] size_type index_to_x_cardinal(size_t index) const
         {
             return index%size_y;
         }
@@ -58,7 +71,7 @@ namespace utils {
             return index_to_x_cardinal(index)+x_origin;
         }
 
-        [[nodiscard]] size_t index_to_y_cardinal(size_t index) const
+        [[nodiscard]] size_type index_to_y_cardinal(size_t index) const
         {
             return index/size_y;
         }
@@ -68,17 +81,17 @@ namespace utils {
             return index_to_y_cardinal(index)+y_origin;
         }
 
-        [[nodiscard]] size_t size() const
+        [[nodiscard]] size_type size() const
         {
             return this->data.size();
         }
 
-        [[nodiscard]] size_t get_size_x() const
+        [[nodiscard]] size_type get_size_x() const
         {
             return size_x;
         }
 
-        [[nodiscard]] size_t get_size_y() const
+        [[nodiscard]] size_type get_size_y() const
         {
             return size_y;
         }
@@ -98,27 +111,41 @@ namespace utils {
                     && (lhs.data==rhs.data);
         }
 
-        friend std::ostream& operator<<<T>(std::ostream& os, const Array2D<T>& a);
+        friend std::ostream& operator
+        <<<T>(
+        std::ostream& os,
+        const Array2D<T>& a
+        );
 
         // Standard vector based begin and ends
-        auto begin()
+        iterator begin()
         {
             return data.begin();
         }
 
-        auto end()
+        iterator end()
         {
             return data.end();
         }
 
-        auto begin() const
+        const_iterator begin() const
         {
             return data.begin();
         }
 
-        auto end() const
+        const_iterator end() const
         {
             return data.end();
+        }
+
+        const_iterator cbegin() const
+        {
+            return data.cbegin();
+        }
+
+        const_iterator cend() const
+        {
+            return data.cend();
         }
 
         // Row iterator
@@ -126,21 +153,21 @@ namespace utils {
 
     private:
         VecType data{};
-        size_t size_x{};
-        size_t size_y{};
+        size_type size_x{};
+        size_type size_y{};
         long long x_origin{0};
         long long y_origin{0};
 
-        size_t x_cardinal(long long x);
+        size_type x_cardinal(long long x);
 
-        size_t y_cardinal(long long y);
+        size_type y_cardinal(long long y);
 
-        T& at_cardinal(const size_t& x_cardinal, const size_t& y_cardinal)
+        reference at_cardinal(const size_t& x_cardinal, const size_t& y_cardinal)
         {
             return data.at(cardinal_to_index(x_cardinal, y_cardinal));
         }
 
-        size_t cardinal_to_index(const size_t& x_cardinal, const size_t& y_cardinal)
+        size_type cardinal_to_index(const size_t& x_cardinal, const size_t& y_cardinal)
         {
             return (y_cardinal*size_x)+x_cardinal;
         }
@@ -150,7 +177,7 @@ namespace utils {
     template<class T>
     RowIterator<T> Array2D<T>::row_iter()
     {
-        return RowIterator<T>{&(this->data), this->get_size_x()};
+        return RowIterator<T>{&data, get_size_x()};
     }
 
     template<class T>
@@ -169,7 +196,7 @@ namespace utils {
     }
 
     template<class T>
-    size_t Array2D<T>::y_cardinal(long long int y)
+    Array2D<T>::size_type Array2D<T>::y_cardinal(long long int y)
     {
         long long y_card = y-y_origin;
         if (y_card>=0 && y_card<size_y) {
@@ -181,7 +208,7 @@ namespace utils {
     }
 
     template<class T>
-    size_t Array2D<T>::x_cardinal(long long int x)
+    Array2D<T>::size_type Array2D<T>::x_cardinal(long long int x)
     {
         long long x_card = x-x_origin;
         if (x_card>=0 && x_card<size_x) {
@@ -204,13 +231,13 @@ namespace utils {
     std::ostream& operator<<(std::ostream& os, const Array2D<T>& a)
     {
 
-        size_t max_len {0};
-        for (auto x: a){
+        size_t max_len{0};
+        for (auto x : a) {
             std::stringstream ss;
             ss << x;
-            size_t str_len {0};
+            size_t str_len{0};
             str_len = ss.str().length();
-            if (str_len > max_len) {
+            if (str_len>max_len) {
                 max_len = str_len;
             }
         }

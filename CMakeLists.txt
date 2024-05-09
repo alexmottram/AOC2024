@@ -13,7 +13,7 @@ set(utils
     utils/array_template.h
     )
 
-set(unittests
+set(utils_unittests
     doctest.h doctest.cpp
     utils_tests/maths_tools_tests.cpp
     utils_tests/vector_tools_tests.cpp
@@ -22,6 +22,16 @@ set(unittests
     utils_tests/array_template_iterator_tests.cpp
 )
 
+set(solutions
+    aoc_2023_examples/solutions/days_1_to_5/day_1.h
+    aoc_2023_examples/solutions/days_1_to_5/day_1.cpp
+)
+set(solution_tests
+    doctest.h doctest.cpp
+    aoc_2023_examples/solution_tests.cpp
+)
+
 set(CMAKE_CXX_STANDARD 20)
 add_executable(AOC-Utils main.cpp "${utils}")
-add_executable(AOC-Utils-Tests "${utils}" "${unittests}")
+add_executable(AOC-Utils-Tests "${utils}" "${utils_unittests}")
+add_executable(AOC-Example-Solutions "${solutions}" "${solution_tests}")

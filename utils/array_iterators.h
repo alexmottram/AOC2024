@@ -16,9 +16,9 @@ namespace utils {
     // Forward assign operators (mainly ostream)
     template<typename T>
     std::ostream& operator<<(std::ostream& os, const Row<T>& r);
+
     template<typename T>
     std::ostream& operator<<(std::ostream& os, const RowIterator<T>& ri);
-
 
     template<class T>
     struct Row {
@@ -26,12 +26,9 @@ namespace utils {
 
         // Iterator constructors here...
         Row(T* ptr, size_t row_size)
-                :m_ptr(ptr), row_size(row_size)
-        {
-            row_start = ptr;
-        }
+                :m_ptr(ptr), row_start(ptr), row_size(row_size) { }
 
-        Row(T* ptr, const T* row_start, size_t row_size)
+        Row(T* ptr, T* row_start, size_t row_size)
                 :m_ptr(ptr), row_start(row_start), row_size(row_size) { }
 
         T& operator*() const { return *m_ptr; }
@@ -39,16 +36,16 @@ namespace utils {
         T* operator->() { return m_ptr; }
 
         // Prefix increment
-        T& operator++()
+        Row<T>& operator++()
         {
             m_ptr++;
-            return *m_ptr;
+            return *this;
         }
 
         // Postfix increment
-        T operator++(int)
+        Row<T> operator++(int)
         {
-            T tmp = *this;
+            Row<T> tmp = Row<T>(m_ptr, row_start, row_size);
             ++(*this);
             return tmp;
         }
@@ -63,21 +60,25 @@ namespace utils {
             return a.m_ptr!=b.m_ptr;
         };
 
-        friend std::ostream& operator << <T>(std::ostream& os, const Row<T>& r);
+        friend std::ostream& operator
+        <<<T>(
+        std::ostream& os,
+        const Row<T>& r
+        );
 
         auto row_end() { return row_start+row_size; }
 
         auto begin() { return Row<T>(m_ptr, row_start, row_size); }
 
-        auto end() { return Row<T>(m_ptr, row_end(), row_size); }
+        auto end() { return Row<T>(row_end(), row_start, row_size); }
 
         auto begin() const { return Row<T>(m_ptr, row_start, row_size); }
 
-        auto end() const { return Row<T>(m_ptr, row_end(), row_size); }
+        auto end() const { return Row<T>(row_end(), row_start, row_size); }
 
     private:
         T* m_ptr;
-        const T* row_start;
+        T* row_start;
         const size_t row_size;
     };
 
@@ -91,10 +92,8 @@ namespace utils {
 
         // Iterator constructors here...
         RowIterator(std::vector<T>* vector_ptr, size_t row_size)
-                :m_vector_ptr(vector_ptr), row_size(row_size)
-        {
-            m_ptr = &(*m_vector_ptr->begin());
-        }
+                :m_ptr(&(*vector_ptr->begin())), m_vector_ptr(vector_ptr),
+                 row_size(row_size) { }
 
         Row<T> operator*() const { return Row<T>{m_ptr, row_size}; }
 
@@ -125,7 +124,11 @@ namespace utils {
             return a.m_ptr!=b.m_ptr;
         };
 
-        friend std::ostream& operator << <T>(std::ostream& os, const RowIterator<T>& ri);
+        friend std::ostream& operator
+        <<<T>(
+        std::ostream& os,
+        const RowIterator<T>& ri
+        );
 
         auto row_iterator_begin()
         {
@@ -168,16 +171,16 @@ namespace utils {
     template<class T>
     std::ostream& operator<<(std::ostream& os, const Row<T>& r)
     {
-        os << "Row{start=" << r.row_start << ", current=" << *r;
-        os << ", len="<< r.row_size << "}";
+        os << "Row{start=" << r.row_start << ", curr_mem=" << r.m_ptr << ", curr_val="
+           << *r;
+        os << ", len=" << r.row_size << "}";
         return os;
     }
-
 
     template<class T>
     std::ostream& operator<<(std::ostream& os, const RowIterator<T>& ri)
     {
-        os << "RowIterator{current=" << *ri << ", len="<< ri.row_size << "}";
+        os << "RowIterator{current=" << *ri << ", len=" << ri.row_size << "}";
         return os;
     }
 }
