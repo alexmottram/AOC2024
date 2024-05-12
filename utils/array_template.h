@@ -4,7 +4,7 @@
 #pragma once
 
 #include "precompile_header.h"
-#include "vector_tools.h"
+#include "vector_3d.h"
 #include "array_utils.h"
 #include "array_iterators.h"
 
@@ -56,7 +56,7 @@ namespace utils {
             return NodeWrapper<T>{val, x_long, y_long};
         }
 
-        reference at(Vec2D vec)
+        reference at(Vec2D<long long> vec)
         {
             return at(vec.x, vec.y);
         }

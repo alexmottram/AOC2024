@@ -6,8 +6,8 @@ TEST_SUITE_BEGIN("Vector tools test suite.");
 
 TEST_CASE("Testing 2d vector class Vec2D.")
 {
-	utils::Vec2D vec_a{ 6, 5 };
-	utils::Vec2D vec_b{ -2, -10 };
+	utils::Vec2D<int> vec_a{ 6, 5 };
+	utils::Vec2D<int> vec_b{ -2, -10 };
 	REQUIRE(vec_a.x == 6);
 	REQUIRE(vec_a.y == 5);
 	REQUIRE(vec_b.x == -2);
@@ -29,14 +29,14 @@ TEST_CASE("Testing 2d vector class Vec2D.")
 
 	SUBCASE("Testing vector less than")
 	{
-		utils::Vec2D vec_nearly_a{ 6, 6 };
+		utils::Vec2D<int> vec_nearly_a{ 6, 6 };
 		CHECK(vec_b < vec_a);
 		CHECK(vec_a < vec_nearly_a);
 	}
 
 	SUBCASE("Testing vector equality")
 	{
-		utils::Vec2D vec_same_as_a{ 6, 5 };
+		utils::Vec2D<int> vec_same_as_a{ 6, 5 };
 		CHECK(vec_same_as_a == vec_a);
 		CHECK_FALSE(vec_a == vec_b);
 	}

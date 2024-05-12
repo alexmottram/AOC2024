@@ -1,7 +1,7 @@
 #pragma once
 
 #include "precompile_header.h"
-#include "vector_tools.h"
+#include "vector_3d.h"
 
 namespace utils {
     template<typename T>
@@ -27,7 +27,7 @@ namespace utils {
         const NodeWrapper<T>& nw
         );
 
-        Vec2D vector() { return Vec2D{x, y}; };
+        Vec2D<long long> vector() { return Vec2D<long long>{x, y}; };
 
     };
 }
