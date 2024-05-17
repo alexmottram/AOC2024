@@ -16,8 +16,11 @@ namespace utils {
         std::filesystem::path test_data_filename;
         std::filesystem::path test_data_path;
 
-        // TODO -> add a constructor that doesn't required base_path using the default value instead
-        InputReader(int day, bool test_data, std::filesystem::path base_path);
+        InputReader(int day, int year, bool test_data, std::filesystem::path base_path);
+
+        InputReader(int day, int year, bool test_data);
+
+        static std::filesystem::path default_base_path();
 
         [[nodiscard]] std::filesystem::path input_data_fullpath() const;
 

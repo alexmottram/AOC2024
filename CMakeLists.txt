@@ -25,17 +25,17 @@ set(utils_unittests
 )
 
 set(solutions
-    aoc_2023_examples/solutions/all_solutions.h
-    aoc_2023_examples/solutions/days_1_to_5/day_1.cpp
-    aoc_2023_examples/solutions/days_1_to_5/day_1.h
-    aoc_2023_examples/solutions/days_1_to_5/day_2.cpp
-    aoc_2023_examples/solutions/days_1_to_5/day_2.h
-    aoc_2023_examples/solutions/days_21_to_25/day_22.cpp
-    aoc_2023_examples/solutions/days_21_to_25/day_22.h
+    solutions/2023/all_solutions.h
+    solutions/2023/days_1_to_5/day_1.cpp
+    solutions/2023/days_1_to_5/day_1.h
+    solutions/2023/days_1_to_5/day_2.cpp
+    solutions/2023/days_1_to_5/day_2.h
+    solutions/2023/days_21_to_25/day_22.cpp
+    solutions/2023/days_21_to_25/day_22.h
 )
 set(solution_tests
     doctest.h doctest.cpp
-    aoc_2023_examples/solution_tests.cpp
+    solutions/2023/2023_solution_tests.cpp
 )
 
 set(CMAKE_CXX_STANDARD 20)

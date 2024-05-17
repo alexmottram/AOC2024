@@ -1,13 +1,15 @@
 #include "input_reader.h"
 
 namespace utils {
-    InputReader::InputReader(int day, bool test_data, std::filesystem::path base_path)
+    InputReader::InputReader(int day, int year, bool test_data, std::filesystem::path base_path)
             :day(day), test_data(test_data)
     {
         this->input_data_filename = "day_"+std::to_string(day)+".txt";
         this->test_data_filename = "day_"+std::to_string(day)+".txt";
-        this->input_data_path = base_path/INPUT_DATA_FOLDER;
-        this->test_data_path = base_path/TEST_DATA_FOLDER;
+        auto data_path = base_path/"data";
+        auto path_with_year = data_path/std::to_string(year);
+        this->input_data_path = path_with_year/INPUT_DATA_FOLDER;
+        this->test_data_path = path_with_year/TEST_DATA_FOLDER;
 
         auto input_exists = std::filesystem::exists(this->input_data_fullpath());
         if (!input_exists) {
@@ -21,6 +23,15 @@ namespace utils {
             test_file.close();
         }
 
+    }
+
+    InputReader::InputReader(int day, int year, bool test_data)
+            :InputReader(day, year, test_data, default_base_path()) { }
+
+    std::filesystem::path InputReader::default_base_path()
+    {
+        auto base_path_parent = BASE_PATH.parent_path();
+        return base_path_parent;
     }
 
     std::filesystem::path InputReader::input_data_fullpath() const
@@ -41,6 +52,7 @@ namespace utils {
         if (!input_file) {
             std::cerr << "Could not open the file: " << this->input_data_fullpath()
                       << std::endl;
+            throw std::runtime_error("File does not exist.");
         }
         else {
             while (getline(input_file, line)) { // always check whether the file is open
@@ -60,6 +72,7 @@ namespace utils {
         if (!test_file) {
             std::cerr << "Could not open the file: " << this->test_data_fullpath()
                       << std::endl;
+            throw std::runtime_error("File does not exist.");
         }
         else {
             while (getline(test_file, line)) { // always check whether the file is open
