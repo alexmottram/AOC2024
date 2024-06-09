@@ -10,10 +10,10 @@ set(utils
     utils/vector_2d.h
     utils/vector_3d.h
     utils/input_reader.cpp utils/input_reader.h
-    utils/array_utils.h
+    utils/array_node_wrapper.h
     utils/array_iterators.h
     utils/array_template.h
-)
+    )
 
 set(utils_unittests
     doctest.h doctest.cpp
@@ -22,7 +22,7 @@ set(utils_unittests
     utils_tests/string_tools_tests.cpp
     utils_tests/array_template_tests.cpp
     utils_tests/array_template_iterator_tests.cpp
-)
+    utils_tests/array_template_node_iterator_tests.cpp)
 
 set(solutions
     solutions/2023/all_solutions.h
@@ -30,13 +30,14 @@ set(solutions
     solutions/2023/days_1_to_5/day_1.h
     solutions/2023/days_1_to_5/day_2.cpp
     solutions/2023/days_1_to_5/day_2.h
-    solutions/2023/days_21_to_25/day_22.cpp
-    solutions/2023/days_21_to_25/day_22.h
-)
+    solutions/2023/days_21_to_25/day_21.cpp
+    solutions/2023/days_21_to_25/day_21.h
+    solutions/2023/days_1_to_5/day_3.h solutions/2023/days_1_to_5/day_3.cpp solutions/2023/day_x.h solutions/2023/day_x.cpp)
+
 set(solution_tests
     doctest.h doctest.cpp
     solutions/2023/2023_solution_tests.cpp
-)
+    )
 
 set(CMAKE_CXX_STANDARD 20)
 add_executable(AOC-Utils main.cpp "${utils}")

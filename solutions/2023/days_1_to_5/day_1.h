@@ -1,6 +1,3 @@
-//
-// Created by alexa on 09/05/2024.
-//
 #pragma once
 
 #include "../../../utils/utils.h"

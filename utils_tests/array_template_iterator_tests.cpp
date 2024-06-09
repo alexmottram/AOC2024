@@ -7,7 +7,7 @@ TEST_SUITE_BEGIN("Array2D iterators test suite.");
 
 TEST_CASE("Testing base array iterator.")
 {
-    utils::Array2D<int> int_array{{{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12}}};
+    utils::Array2D<int> int_array{std::vector<std::vector<int>>{{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12}}};
 
     SUBCASE("Accessing values using the iterator.") {
         int expected_value{1};
@@ -35,7 +35,7 @@ TEST_CASE("Testing base array iterator.")
 
 TEST_CASE("Testing basic properties of row first iterator.")
 {
-    utils::Array2D<int> int_array{{{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12}}};
+    utils::Array2D<int> int_array{std::vector<std::vector<int>>{{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12}}};
 
     SUBCASE("Row iterators are equal when initialised.") {
         auto it_a = int_array.row_iter();
@@ -88,7 +88,7 @@ TEST_CASE("Testing basic properties of row first iterator.")
 
 TEST_CASE("Testing row first iterator using explicit for loops.")
 {
-    utils::Array2D<int> int_array{{{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12}}};
+    utils::Array2D<int> int_array{std::vector<std::vector<int>>{{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12}}};
 
     SUBCASE("Creating row iterator and iterating manually (changing number 2).") {
         auto row_iter = int_array.row_iter();
@@ -106,7 +106,7 @@ TEST_CASE("Testing row first iterator using explicit for loops.")
 
 TEST_CASE("Testing row first iterator access and modification using auto.")
 {
-    utils::Array2D<int> int_array{{{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12}}};
+    utils::Array2D<int> int_array{std::vector<std::vector<int>>{{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12}}};
 
     SUBCASE("Accessing values using the iterator.") {
         int expected_value{1};

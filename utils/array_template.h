@@ -5,15 +5,14 @@
 
 #include "precompile_header.h"
 #include "vector_3d.h"
-#include "array_utils.h"
+#include "array_node_wrapper.h"
 #include "array_iterators.h"
+#include "array_node_iterators.h"
 
 namespace utils {
-    template<typename T>
-    class Array2D;
 
     template<typename T>
-    class NodeWrapper;
+    class Array2D;
 
     // Forward assign Array operators
     template<typename T>
@@ -36,49 +35,126 @@ namespace utils {
 
         using VecType = std::vector<value_type>;
         using DualVecType = std::vector<VecType>;
+        using NodeType = NodeWrapper<size_type, value_type>;
 
         explicit Array2D(const DualVecType& input_data);
 
-        template<typename IdxT>
-        reference at(IdxT x, IdxT y)
+        explicit Array2D(const std::vector<std::string>& input_strings);
+
+        template<typename size_type>
+        reference at(size_type x, size_type y)
         {
-            auto x_long = static_cast<long long> (x);
-            auto y_long = static_cast<long long> (y);
-            return at_cardinal(x_cardinal(x_long), y_cardinal(y_long));
+            auto x_coord = static_cast<size_type> (x);
+            auto y_coord = static_cast<size_type> (y);
+            return at_index(coords_to_idx(x_coord, y_coord));
         }
 
-        template<typename IdxT>
-        NodeWrapper<value_type> node_at(IdxT x, IdxT y)
-        {
-            auto x_long = static_cast<long long> (x);
-            auto y_long = static_cast<long long> (y);
-            auto& val = at_cardinal(x_cardinal(x_long), y_cardinal(y_long));
-            return NodeWrapper<T>{val, x_long, y_long};
-        }
-
-        reference at(Vec2D<long long> vec)
+        reference at(Vec2D<size_type> vec)
         {
             return at(vec.x, vec.y);
         }
 
-        [[nodiscard]] size_type index_to_x_cardinal(size_t index) const
+        NodeType node_at(size_type x, size_type y)
+        {
+            size_type x_idx = static_cast<size_type> (x);
+            size_type y_idx = static_cast<size_type> (y);
+            reference val = at(x_idx, y_idx);
+            return NodeType{val, x_idx, y_idx};
+        }
+
+        reference at_index(size_type idx)
+        {
+            return data.at(idx);
+        }
+
+        std::set<NodeType> find(const_reference val)
+        {
+            std::set<NodeType> found_nodes;
+            for (auto x_coord{0}; x_coord<size_x; x_coord++) {
+                for (auto y_coord{0}; y_coord<size_y; y_coord++) {
+                    auto& val_at_coords = at(x_coord, y_coord);
+                    if (val_at_coords==val) {
+                        found_nodes.emplace(val_at_coords, x_coord, y_coord);
+                    }
+                }
+            }
+            return found_nodes;
+        }
+
+        std::set<NodeType> adjacent(size_type x, size_type y, bool include_diagonals=false)
+        {
+
+            std::set<NodeType> adjacent_nodes{};
+            bool x_in_array = (x>=0 && x<size_x);
+            bool y_in_array = (y>=0 && y<size_y);
+
+            // Left node
+            if (x>0 && y_in_array) {
+                adjacent_nodes.emplace(node_at(x-1, y));
+            }
+            // Right node
+            if ((x<(size_x-1)) && y_in_array) {
+                adjacent_nodes.emplace(node_at(x+1, y));
+            }
+            // Up node
+            if (y>0 && x_in_array) {
+                adjacent_nodes.emplace(node_at(x, y-1));
+            }
+            // Down node
+            if ((y<(size_y-1)) && x_in_array) {
+                adjacent_nodes.emplace(node_at(x, y+1));
+            }
+
+            if (include_diagonals) {
+
+                bool up_in_array = y+1 < size_y;
+                bool down_in_array = y > 0;
+                bool left_in_array = x > 0;
+                bool right_in_array = x+1 < size_x;
+
+                // Up-Left node
+                if (up_in_array && left_in_array) {
+                    adjacent_nodes.emplace(node_at(x-1, y+1));
+                }
+
+                // Up-Right node
+                if (up_in_array && right_in_array) {
+                    adjacent_nodes.emplace(node_at(x+1, y+1));
+                }
+
+                // Down-Left node
+                if (down_in_array && left_in_array) {
+                    adjacent_nodes.emplace(node_at(x-1, y-1));
+                }
+
+                // Down-Right node
+                if (down_in_array && right_in_array) {
+                    adjacent_nodes.emplace(node_at(x+1, y-1));
+                }
+
+            }
+
+            return adjacent_nodes;
+        }
+
+        std::set<NodeType> adjacent(NodeType node, bool include_diagonals=false)
+        {
+            return adjacent(node.x, node.y, include_diagonals);
+        }
+
+        size_type coords_to_idx(size_type x, size_type y)
+        {
+            return (y*size_x)+x;
+        }
+
+        [[nodiscard]] size_type index_to_x(size_t index) const
         {
             return index%size_y;
         }
 
-        [[nodiscard]] long long index_to_actual_x(size_t index) const
-        {
-            return index_to_x_cardinal(index)+x_origin;
-        }
-
-        [[nodiscard]] size_type index_to_y_cardinal(size_t index) const
+        [[nodiscard]] size_type index_to_y(size_t index) const
         {
             return index/size_y;
-        }
-
-        [[nodiscard]] long long index_to_actual_y(size_t index) const
-        {
-            return index_to_y_cardinal(index)+y_origin;
         }
 
         [[nodiscard]] size_type size() const
@@ -149,36 +225,26 @@ namespace utils {
         }
 
         // Row iterator
-        RowIterator<T> row_iter();
+        RowIterator<value_type> row_iter()
+        {
+            return RowIterator<T>{&data, get_size_x()};
+        }
+
+        NodeIterator<value_type, size_type> node_iter()
+        {
+            return NodeIterator<value_type, size_type>{&data, get_size_x()};
+        }
+
+        NodeRowIterator<value_type, size_type> node_row_iter()
+        {
+            return NodeRowIterator<value_type, size_type>{&data, get_size_x()};
+        }
 
     private:
         VecType data{};
         size_type size_x{};
         size_type size_y{};
-        long long x_origin{0};
-        long long y_origin{0};
-
-        size_type x_cardinal(long long x);
-
-        size_type y_cardinal(long long y);
-
-        reference at_cardinal(const size_t& x_cardinal, const size_t& y_cardinal)
-        {
-            return data.at(cardinal_to_index(x_cardinal, y_cardinal));
-        }
-
-        size_type cardinal_to_index(const size_t& x_cardinal, const size_t& y_cardinal)
-        {
-            return (y_cardinal*size_x)+x_cardinal;
-        }
-
     };
-
-    template<class T>
-    RowIterator<T> Array2D<T>::row_iter()
-    {
-        return RowIterator<T>{&data, get_size_x()};
-    }
 
     template<class T>
     Array2D<T>::Array2D(const DualVecType& input_data)
@@ -196,35 +262,19 @@ namespace utils {
     }
 
     template<class T>
-    Array2D<T>::size_type Array2D<T>::y_cardinal(long long int y)
+    Array2D<T>::Array2D(const std::vector<std::string>& input_data)
     {
-        long long y_card = y-y_origin;
-        if (y_card>=0 && y_card<size_y) {
-            return y_card;
+        this->size_y = input_data.size();
+        this->size_x = input_data.front().size();
+        for (const auto& row : input_data) {
+            auto vals = utils::string_to_vector_type<T>(row);
+            if (vals.size()!=this->size_x) {
+                throw std::invalid_argument("Uneven subvector sizes.");
+            }
+            for (auto val : vals) {
+                this->data.push_back(val);
+            }
         }
-        else {
-            throw std::invalid_argument("Y value outside of range");
-        }
-    }
-
-    template<class T>
-    Array2D<T>::size_type Array2D<T>::x_cardinal(long long int x)
-    {
-        long long x_card = x-x_origin;
-        if (x_card>=0 && x_card<size_x) {
-            return x_card;
-        }
-        else {
-            throw std::invalid_argument("X value outside of range");
-        }
-    }
-
-    template<class T>
-    std::ostream& operator<<(std::ostream& os, const NodeWrapper<T>& nw)
-    {
-        os << "NodeWrapper{x=" << nw.x << " ,y=" << nw.y;
-        os << " ,value=" << nw.value << "}";
-        return os;
     }
 
     template<class T>

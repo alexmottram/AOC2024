@@ -13,8 +13,7 @@ struct VectorsAndInt {
 
 TEST_CASE("Basic features of array template with ints.")
 {
-    utils::Array2D<int>
-            int_array{{{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12}}};
+    utils::Array2D<int> int_array{std::vector<std::vector<int>>{{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12}}};
 
     SUBCASE("Access using at method returns correct values.") {
         std::vector<VectorsAndInt> position_tests{
@@ -53,10 +52,10 @@ TEST_CASE("Basic features of array template with ints.")
 
 TEST_CASE("Equality operations for an array of ints.")
 {
-    utils::Array2D<int> int_array_org{{{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12}}};
-    utils::Array2D<int> int_array_same{{{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12}}};
-    utils::Array2D<int> int_array_different_size{{{1, 2, 3}, {4, 5, 6}, {7, 8, 9}, {10, 11, 12}}};
-    utils::Array2D<int> int_array_different_values{{{4, 3, 2, 1}, {5, 6, 7, 8}, {9, 10, 11, 12}}};
+    utils::Array2D<int> int_array_org{std::vector<std::vector<int>>{{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12}}};
+    utils::Array2D<int> int_array_same{std::vector<std::vector<int>>{{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12}}};
+    utils::Array2D<int> int_array_different_size{std::vector<std::vector<int>>{{1, 2, 3}, {4, 5, 6}, {7, 8, 9}, {10, 11, 12}}};
+    utils::Array2D<int> int_array_different_values{std::vector<std::vector<int>>{{4, 3, 2, 1}, {5, 6, 7, 8}, {9, 10, 11, 12}}};
 
     SUBCASE("Test equality operation.") {
         SUBCASE("Arrays are equal.") {
@@ -76,8 +75,7 @@ TEST_CASE("Equality operations for an array of ints.")
 
 TEST_CASE("Modification of values in array.")
 {
-    utils::Array2D<int>
-            int_array{{{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12}}};
+    utils::Array2D<int> int_array{std::vector<std::vector<int>>{{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12}}};
 
     SUBCASE("Reassigning value in the array.") {
         CHECK(int_array.at(1, 2)==10);
@@ -88,8 +86,7 @@ TEST_CASE("Modification of values in array.")
 
 TEST_CASE("Basic feature testing of node wrappers.")
 {
-    utils::Array2D<int>
-            int_array{{{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12}}};
+    utils::Array2D<int> int_array{std::vector<std::vector<int>>{{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12}}};
 
     SUBCASE("Reading from node wrapper.") {
         auto node = int_array.node_at(1, 2);

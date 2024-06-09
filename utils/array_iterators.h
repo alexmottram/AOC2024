@@ -171,9 +171,8 @@ namespace utils {
     template<class T>
     std::ostream& operator<<(std::ostream& os, const Row<T>& r)
     {
-        os << "Row{start=" << r.row_start << ", curr_mem=" << r.m_ptr << ", curr_val="
-           << *r;
-        os << ", len=" << r.row_size << "}";
+        os << "Row{start=" << r.row_start << ", curr_mem=" << r.m_ptr;
+        os << ", curr_val=" << *r << ", len=" << r.row_size << "}";
         return os;
     }
 
