@@ -32,7 +32,11 @@ set(solutions
     solutions/2023/days_1_to_5/day_2.h
     solutions/2023/days_21_to_25/day_21.cpp
     solutions/2023/days_21_to_25/day_21.h
-    solutions/2023/days_1_to_5/day_3.h solutions/2023/days_1_to_5/day_3.cpp solutions/2023/day_x.h solutions/2023/day_x.cpp)
+    solutions/2023/days_1_to_5/day_3.h
+    solutions/2023/days_1_to_5/day_3.cpp
+    solutions/2023/day_x.h
+    solutions/2023/day_x.cpp
+)
 
 set(solution_tests
     doctest.h doctest.cpp

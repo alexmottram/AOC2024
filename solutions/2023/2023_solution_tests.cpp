@@ -80,7 +80,7 @@ TEST_CASE("AOC 2023 Day 2 solution.")
 {
 
     int day{2};
-    bool is_test{true};
+    bool is_test{false};
     utils::InputReader data{day, YEAR, is_test};
     auto part_a = solutions::day_2_part_a(data);
     print_part_a_solution(day, is_test, part_a);

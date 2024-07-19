@@ -1,5 +1,7 @@
 #include "day_1.h"
 
+#include <ranges>
+
 namespace solutions {
 
     const std::map<std::string, int> DIGITS_MAP{
@@ -14,7 +16,7 @@ namespace solutions {
             {"nine", 9},
     };
 
-    long long find_first_digit(std::string str, bool include_strings)
+    long long find_first_digit(const std::string& str, bool include_strings)
     {
         std::string build_str{};
         for (auto val : str) {
@@ -36,9 +38,9 @@ namespace solutions {
     long long find_last_digit(std::string str, bool include_strings)
     {
         std::string build_str{};
-        for (auto val = str.rbegin(); val!=str.rend(); ++val) {
-            auto val_copy = *val;
-            if (std::isdigit(val_copy)) { return *val-'0'; }
+        for (char & val : std::ranges::reverse_view(str)) {
+            auto val_copy = val;
+            if (std::isdigit(val_copy)) { return val-'0'; }
             if (include_strings) {
                 std::string sub_str{val_copy};
                 build_str.insert(0, sub_str);
@@ -55,7 +57,7 @@ namespace solutions {
 
     }
 
-    long long combine_two_digits(long long a, long long b)
+    int combine_two_digits(long long a, long long b)
     {
         std::stringstream ss;
         ss << a << b;
@@ -69,7 +71,7 @@ namespace solutions {
         std::vector<int> nums_out{};
         int num_sum{0};
 
-        for (auto line : data_in) {
+        for (const auto& line : data_in) {
             auto first_digit = find_first_digit(line, false);
             auto last_digit = find_last_digit(line, false);
             int num = combine_two_digits(first_digit, last_digit);
@@ -86,7 +88,7 @@ namespace solutions {
         std::vector<int> nums_out{};
         int num_sum{0};
 
-        for (auto line : data_in) {
+        for (const auto& line : data_in) {
             auto first_digit = find_first_digit(line, true);
             auto last_digit = find_last_digit(line, true);
             int num = combine_two_digits(first_digit, last_digit);
