@@ -26,10 +26,6 @@ namespace utils {
 
         [[nodiscard]] std::filesystem::path test_data_fullpath() const;
 
-        [[nodiscard]] std::vector<std::string> input_vector() const;
-
-        [[nodiscard]] std::vector<std::string> test_vector() const;
-
         [[nodiscard]] std::vector<std::string> string_vector() const;
 
     };

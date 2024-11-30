@@ -44,17 +44,29 @@ namespace utils {
         return test_data_path/test_data_filename;
     }
 
-    std::vector<std::string> InputReader::input_vector() const
+    std::vector<std::string> InputReader::string_vector() const
     {
+        std::ifstream input_file;
+        if (test_data) {
+            input_file = this->test_data_fullpath();
+            std::cout << "Loading test data from path: "
+                << this->test_data_fullpath() << std::endl;
+        }
+        else {
+            input_file = this->input_data_fullpath();
+            std::cout << "Loading input data from path: "
+                << this->input_data_fullpath() << std::endl;
+        }
+
         std::vector<std::string> input_vector;
-        std::string line;
-        std::ifstream input_file(this->input_data_fullpath());
+
         if (!input_file) {
             std::cerr << "Could not open the file: " << this->input_data_fullpath()
                       << std::endl;
             throw std::runtime_error("File does not exist.");
         }
         else {
+            std::string line;
             while (getline(input_file, line)) { // always check whether the file is open
                 input_vector.push_back(line);
             }
@@ -62,36 +74,6 @@ namespace utils {
         std::cout << "Finished loading file: " << this->input_data_fullpath()
                   << std::endl;
         return input_vector;
-    }
-
-    std::vector<std::string> InputReader::test_vector() const
-    {
-        std::vector<std::string> test_data_vector;
-        std::string line;
-        std::ifstream test_file(this->test_data_fullpath());
-        if (!test_file) {
-            std::cerr << "Could not open the file: " << this->test_data_fullpath()
-                      << std::endl;
-            throw std::runtime_error("File does not exist.");
-        }
-        else {
-            while (getline(test_file, line)) { // always check whether the file is open
-                test_data_vector.push_back(line);
-            }
-        }
-        std::cout << "Finished loading file: " << this->test_data_fullpath()
-                  << std::endl;
-        return test_data_vector;
-    }
-
-    std::vector<std::string> InputReader::string_vector() const
-    {
-        if (test_data) {
-            return this->test_vector();
-        }
-        else {
-            return this->input_vector();
-        }
     }
 
 }
