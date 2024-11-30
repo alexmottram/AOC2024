@@ -19,7 +19,7 @@ namespace solutions {
     long long find_first_digit(const std::string& str, bool include_strings)
     {
         std::string build_str{};
-        for (auto val : str) {
+        for (const auto val : str) {
             if (std::isdigit(val)) { return val-'0'; }
             if (include_strings) {
                 build_str.push_back(val);
@@ -35,11 +35,11 @@ namespace solutions {
 
     }
 
-    long long find_last_digit(std::string str, bool include_strings)
+    long long find_last_digit(std::string str, const bool include_strings)
     {
         std::string build_str{};
-        for (char & val : std::ranges::reverse_view(str)) {
-            auto val_copy = val;
+        for (const char & val : std::ranges::reverse_view(str)) {
+            const auto val_copy = val;
             if (std::isdigit(val_copy)) { return val-'0'; }
             if (include_strings) {
                 std::string sub_str{val_copy};
@@ -57,11 +57,11 @@ namespace solutions {
 
     }
 
-    int combine_two_digits(long long a, long long b)
+    int combine_two_digits(const long long a, const long long b)
     {
         std::stringstream ss;
         ss << a << b;
-        int combined_num = std::stoi(ss.str());
+        const int combined_num = std::stoi(ss.str());
         return combined_num;
     }
 
@@ -72,8 +72,8 @@ namespace solutions {
         int num_sum{0};
 
         for (const auto& line : data_in) {
-            auto first_digit = find_first_digit(line, false);
-            auto last_digit = find_last_digit(line, false);
+            const auto first_digit = find_first_digit(line, false);
+            const auto last_digit = find_last_digit(line, false);
             int num = combine_two_digits(first_digit, last_digit);
             nums_out.push_back(num);
             num_sum += num;
@@ -89,8 +89,8 @@ namespace solutions {
         int num_sum{0};
 
         for (const auto& line : data_in) {
-            auto first_digit = find_first_digit(line, true);
-            auto last_digit = find_last_digit(line, true);
+            const auto first_digit = find_first_digit(line, true);
+            const auto last_digit = find_last_digit(line, true);
             int num = combine_two_digits(first_digit, last_digit);
             nums_out.push_back(num);
             num_sum += num;

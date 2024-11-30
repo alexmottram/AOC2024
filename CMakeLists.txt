@@ -25,25 +25,19 @@ set(utils_unittests
     utils_tests/array_template_node_iterator_tests.cpp)
 
 set(solutions
-    solutions/2023/all_solutions.h
-    solutions/2023/days_1_to_5/day_1.cpp
-    solutions/2023/days_1_to_5/day_1.h
-    solutions/2023/days_1_to_5/day_2.cpp
-    solutions/2023/days_1_to_5/day_2.h
-    solutions/2023/days_21_to_25/day_21.cpp
-    solutions/2023/days_21_to_25/day_21.h
-    solutions/2023/days_1_to_5/day_3.h
-    solutions/2023/days_1_to_5/day_3.cpp
-    solutions/2023/day_x.h
-    solutions/2023/day_x.cpp
+    solutions/2024/all_solutions.h
+    solutions/2024/days_1_to_5/day_1.cpp
+    solutions/2024/days_1_to_5/day_1.h
+    solutions/2024/day_x.h
+    solutions/2024/day_x.cpp
 )
 
 set(solution_tests
     doctest.h doctest.cpp
-    solutions/2023/2023_solution_tests.cpp
+    solutions/2024/2024_solution_tests.cpp
     )
 
 set(CMAKE_CXX_STANDARD 20)
 add_executable(AOC-Utils main.cpp "${utils}")
 add_executable(AOC-Utils-Tests "${utils}" "${utils_unittests}")
-add_executable(AOC-Example-Solutions "${utils}" "${solutions}" "${solution_tests}")
+add_executable(AOC-2024-Solutions "${utils}" "${solutions}" "${solution_tests}")
