@@ -41,11 +41,11 @@ TEST_CASE("AOC 2024 Day 1 tests.")
     utils::InputReader data{day, YEAR, is_test};
     auto part_a = solutions::day_1_part_a(data);
     print_part_a_solution(day, is_test, part_a);
-    CHECK(part_a==209);
+    CHECK(part_a==11);
 
     auto part_b = solutions::day_1_part_b(data);
     print_part_b_solution(day, is_test, part_b);
-    CHECK(part_b==281);
+    CHECK(part_b==31);
 }
 
 TEST_CASE("AOC 2024 Day 1 solution.")
@@ -55,7 +55,7 @@ TEST_CASE("AOC 2024 Day 1 solution.")
     utils::InputReader data{day, YEAR, is_test};
     auto part_a = solutions::day_1_part_a(data);
     print_part_a_solution(day, is_test, part_a);
-    CHECK(part_a==55029);
+    CHECK(part_a==1110981);
 
     auto part_b = solutions::day_1_part_b(data);
     print_part_b_solution(day, is_test, part_b);
