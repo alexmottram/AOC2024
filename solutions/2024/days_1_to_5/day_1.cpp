@@ -24,7 +24,7 @@ namespace solutions {
         std::cout << "Left col: " << left_col << std::endl;
         std::cout << "Right col: " << right_col << std::endl;
 
-        for (size_t i{0}; i<left_col.size(); i++)
+        for (auto i{0}; i<left_col.size(); i++)
         {
             diff += abs(left_col[i]- right_col[i]);
         }
