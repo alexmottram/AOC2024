@@ -10,11 +10,11 @@ namespace utils
         std::cout << "Solution for day " << day << " part " << part;
         if (is_test)
         {
-            std::cout << "for test data: ";
+            std::cout << " for test data: ";
         }
         else
         {
-            std::cout << "for real data: ";
+            std::cout << " for real data: ";
         }
         std::cout << solution << std::endl;
     }

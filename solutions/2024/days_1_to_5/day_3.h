@@ -3,7 +3,7 @@
 #include "../../../utils/utils.h"
 
 namespace solutions{
-    constexpr long long DAY_3_PART_A_TEST {1};
+    constexpr long long DAY_3_PART_A_TEST {161};
     constexpr long long DAY_3_PART_A_SOLUTION {1};
 
     constexpr long long DAY_3_PART_B_TEST {1};
