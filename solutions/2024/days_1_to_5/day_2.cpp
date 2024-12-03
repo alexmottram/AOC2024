@@ -29,7 +29,7 @@ namespace solutions
             report_diff.push_back(report[i] - report[i - 1]);
         }
 
-        std::cout << "Diff vector: " << report_diff << std::endl;
+        // std::cout << "Diff vector: " << report_diff << std::endl;
 
         const bool all_in_range = std::all_of(report_diff.begin(), report_diff.end(), numbers_in_range);
         const bool all_pos = std::all_of(report_diff.begin(), report_diff.end(), [](const int i) { return i > 0; });

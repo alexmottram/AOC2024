@@ -13,7 +13,7 @@ set(utils
     utils/array_node_wrapper.h
     utils/array_iterators.h
     utils/array_template.h
-#    utils/solution.h
+    utils/solution.cpp utils/solution.h
     )
 
 set(utils_unittests
@@ -31,16 +31,22 @@ set(solutions
     solutions/2024/days_1_to_5/day_1.h
     solutions/2024/days_1_to_5/day_2.cpp
     solutions/2024/days_1_to_5/day_2.h
-    solutions/2024/day_x.h
-    solutions/2024/day_x.cpp
+    solutions/2024/days_1_to_5/day_3.cpp
+    solutions/2024/days_1_to_5/day_3.h
 )
 
-set(solution_tests
+set(all_solution_tests
     doctest.h doctest.cpp
     solutions/2024/2024_solution_tests.cpp
+    )
+
+set(single_days_solution_tests
+    doctest.h doctest.cpp
+    solutions/2024/2024_single_solution.cpp
     )
 
 set(CMAKE_CXX_STANDARD 20)
 add_executable(AOC-Utils main.cpp "${utils}")
 add_executable(AOC-Utils-Tests "${utils}" "${utils_unittests}")
-add_executable(AOC-2024-Solutions "${utils}" "${solutions}" "${solution_tests}")
+add_executable(AOC-2024-All-Solutions "${utils}" "${solutions}" "${all_solution_tests}")
+add_executable(AOC-2024-Single-Solutions "${utils}" "${solutions}" "${single_days_solution_tests}")
