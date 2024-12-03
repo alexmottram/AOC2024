@@ -21,11 +21,32 @@ namespace solutions {
         return running_total;
     }
 
+    long long find_instructions_after_do(const std::string& instructions)
+    {
+        long long running_total {0};
+
+        std::vector<std::string> instruction_split = utils::split_string(instructions, "do()");
+        for (const std::string& sub_instruction: instruction_split)
+        {
+            std::cout << "Sub-instruction set is: " << sub_instruction << std::endl;
+            std::vector<std::string> sub_instruction_split = utils::split_string(sub_instruction, "don't()");
+            const auto& do_instructions = sub_instruction_split[0];
+            std::cout << "Do instructions are: " << do_instructions << std::endl;
+            running_total += find_instructions(do_instructions);
+        }
+
+        return running_total;
+    }
+
+
     long long day_3_part_a(const utils::InputReader& input)
     {
         const std::vector<std::string> instructions_multi_line = input.string_vector();
-        const std::string& instructions = instructions_multi_line[0];
+        const std::string instructions = std::accumulate(
+            instructions_multi_line.begin(), instructions_multi_line.end(), std::string("")
+            );
         std::cout << "Instructions are: " << instructions << std::endl;
+
         const long long multiplied_val = find_instructions(instructions);
         return multiplied_val;
     }
@@ -33,9 +54,10 @@ namespace solutions {
     long long day_3_part_b(const utils::InputReader& input)
     {
         const std::vector<std::string> instructions_multi_line = input.string_vector();
-        const std::string& instructions = instructions_multi_line[0];
+        std::string instructions = std::accumulate(instructions_multi_line.begin(), instructions_multi_line.end(), std::string(""));
         std::cout << "Instructions are: " << instructions << std::endl;
-        const long long multiplied_val = find_instructions(instructions);
+
+        const long long multiplied_val = find_instructions_after_do(instructions);
         return multiplied_val;
     }
 }
