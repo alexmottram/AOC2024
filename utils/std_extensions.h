@@ -14,6 +14,12 @@ std::ostream &operator<<(std::ostream &os, const std::set <T> &s) {
 }
 
 template<typename T1, typename T2>
+std::ostream &operator<<(std::ostream &os, const std::pair <T1, T2> &p) {
+	os << "pair<1st:" << p.first << ", 2nd:" << p.second << ">";
+	return os;
+}
+
+template<typename T1, typename T2>
 std::ostream &operator<<(std::ostream &os, const std::map <T1, T2> &s) {
 	os << "{";
 	

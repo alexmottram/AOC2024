@@ -48,7 +48,18 @@ namespace utils {
             return at_index(coords_to_idx(x_coord, y_coord));
         }
 
+        template<typename size_type>
+        value_type at(size_type x, size_type y) const {
+            auto x_coord = static_cast<size_type> (x);
+            auto y_coord = static_cast<size_type> (y);
+            return at_index(coords_to_idx(x_coord, y_coord));
+        }
+
         reference at(Vec2D<size_type> vec) {
+            return at(vec.x, vec.y);
+        }
+
+        value_type at(Vec2D<size_type> vec) const {
             return at(vec.x, vec.y);
         }
 
@@ -61,6 +72,21 @@ namespace utils {
 
         reference at_index(size_type idx) {
             return data.at(idx);
+        }
+
+        value_type at_index(size_type idx) const {
+            return data.at(idx);
+        }
+
+        template<typename other_vec_type>
+        [[nodiscard]] bool vector_in_array(const Vec2D<other_vec_type> vec) const
+        {
+            if (vec.x < 0 || vec.y < 0){ return false;}
+            else {
+                const auto x_val = static_cast<size_type> (vec.x);
+                const auto y_val = static_cast<size_type> (vec.y);
+                return ((x_val < size_x) && (y_val < size_y));
+            }
         }
 
         std::set<NodeType> find(const_reference val) {
@@ -135,7 +161,7 @@ namespace utils {
             return adjacent(node.x, node.y, include_diagonals);
         }
 
-        size_type coords_to_idx(size_type x, size_type y) {
+        [[nodiscard]] size_type coords_to_idx(const size_type x, const size_type y) const {
             return (y * size_x) + x;
         }
 

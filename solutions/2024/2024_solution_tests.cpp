@@ -132,4 +132,47 @@ TEST_CASE("AOC 2024 Day 3 part B solution.")
     CHECK(part_b==solutions::DAY_3_PART_B_SOLUTION);
 }
 
+
+TEST_CASE("AOC 2024 Day 4 part A tests.")
+{
+    constexpr int day{4};
+    constexpr bool is_test{true};
+    const utils::InputReader data{day, YEAR, is_test};
+    auto part_a = solutions::day_4_part_a(data);
+    utils::print_solution_part("A", day, is_test, part_a);
+    CHECK(part_a==solutions::DAY_4_PART_A_TEST);
+}
+
+
+TEST_CASE("AOC 2024 Day 4 part B tests.")
+{
+    constexpr int day{4};
+    constexpr bool is_test{true};
+    const utils::InputReader data{day, YEAR, is_test};
+    auto part_b = solutions::day_4_part_b(data);
+    utils::print_solution_part("B", day, is_test, part_b);
+    CHECK(part_b==solutions::DAY_4_PART_B_TEST);
+}
+
+TEST_CASE("AOC 2024 Day 4 part A solution.")
+{
+    constexpr int day{4};
+    constexpr bool is_test{false};
+    const utils::InputReader data{day, YEAR, is_test};
+    auto part_a = solutions::day_4_part_a(data);
+    utils::print_solution_part("A", day, is_test, part_a);
+    CHECK(part_a==solutions::DAY_4_PART_A_SOLUTION);
+}
+
+TEST_CASE("AOC 2024 Day 4 part B solution.")
+{
+    constexpr int day{4};
+    constexpr bool is_test{false};
+    const utils::InputReader data{day, YEAR, is_test};
+    auto part_b = solutions::day_4_part_b(data);
+    utils::print_solution_part("B", day, is_test, part_b);
+    CHECK(part_b==solutions::DAY_4_PART_B_SOLUTION);
+}
+
+
 TEST_SUITE_END;
