@@ -1,5 +1,7 @@
 #pragma once
-#include <complex.h>
+#pragma clang diagnostic ignored "-Woverloaded-shift-op-parentheses"
+#include "../doctest.h"
+
 
 #include "precompile_header.h"
 #include "input_reader.h"
@@ -28,18 +30,24 @@ namespace utils
     public:
         static constexpr int YEAR{0};
         static constexpr int DAY{0};
+
+        static constexpr sol_T EXPECTED_TEST_A {0};
+        static constexpr sol_T EXPECTED_TEST_B {0};
+        static constexpr sol_T EXPECTED_SOLUTION_A {0};
+        static constexpr sol_T EXPECTED_SOLUTION_B {0};
+
         virtual ~SolutionTemplate() = default;
 
         sol_T solution_part_a(const bool is_test=false)
         {
             auto input_reader = get_input_reader(is_test);
-            return solution_part_a(input_reader);
+            return solve_part_a(input_reader);
         };
 
         sol_T solution_part_b(const bool is_test=false)
         {
             auto input_reader = get_input_reader(is_test);
-            return solution_part_b(input_reader);
+            return solve_part_b(input_reader);
         };
 
         [[nodiscard]] static InputReader get_input_reader(bool is_test=false)
@@ -47,7 +55,20 @@ namespace utils
             return {DAY, YEAR, is_test};
         }
 
-        virtual sol_T solve_part_a(InputReader input_reader);
-        virtual sol_T solve_part_b(InputReader input_reader);
+        virtual sol_T solve_part_a(InputReader input_reader) = 0;
+        virtual sol_T solve_part_b(InputReader input_reader) = 0;
     };
+
+    // template<out_T>
+    // void run_test_suite(SolutionTemplate<out_T> SolTemplate)
+    // {
+    //     std::stringstream test_suite_sstring;
+    //     test_suite_sstring << "Test suite for year: " << SolTemplate::YEAR << " and day: " << solution_template::DAY;
+    //     std::string test_suite_string{test_suite_sstring.str()};
+    //     TEST_SUITE_BEGIN("Inside test suite for solution template");
+    //     CHECK(true);
+    //     std::cout << "Hit test suite: " << std::endl;
+    //     TEST_SUITE_END;
+    // }
+
 }

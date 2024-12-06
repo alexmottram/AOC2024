@@ -4,7 +4,7 @@
 
 TEST_SUITE_BEGIN("Solution tools test suite.");
 
-class MySolution final : utils::SolutionTemplate<int>{
+class MySolution final : public utils::SolutionTemplate<int>{
 public:
     static constexpr int DAY {10};
     static constexpr int YEAR {2024};
@@ -18,10 +18,12 @@ TEST_CASE("Implementing of solution class.")
     SUBCASE("Test properties of solution template")
     {
         MySolution my_sol{};
-        auto part_a_val = my_sol.get_input_reader();
+        auto part_a_val = my_sol.solution_part_a(true);
+        auto part_b_val = my_sol.solution_part_b(true);
         CHECK(part_a_val == MySolution::DAY);
-        CHECK(part_a_val == MySolution::YEAR);
+        CHECK(part_b_val == MySolution::YEAR);
     }
+
 }
 
 TEST_SUITE_END;
