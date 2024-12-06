@@ -13,7 +13,7 @@ set(utils
     utils/array_node_wrapper.h
     utils/array_iterators.h
     utils/array_template.h
-    utils/solution.cpp utils/solution.h
+    utils/solution_tools.cpp utils/solution_tools.h
     )
 
 set(utils_unittests
@@ -23,7 +23,8 @@ set(utils_unittests
     utils_tests/string_tools_tests.cpp
     utils_tests/array_template_tests.cpp
     utils_tests/array_template_iterator_tests.cpp
-    utils_tests/array_template_node_iterator_tests.cpp)
+    utils_tests/array_template_node_iterator_tests.cpp
+    utils_tests/solution_tools_tests.cpp)
 
 set(solutions
     solutions/2024/all_solutions.h
@@ -33,8 +34,8 @@ set(solutions
     solutions/2024/days_1_to_5/day_2.h
     solutions/2024/days_1_to_5/day_3.cpp
     solutions/2024/days_1_to_5/day_3.h
-#    solutions/2024/days_1_to_5/day_4.cpp
-#    solutions/2024/days_1_to_5/day_4.h
+    solutions/2024/days_1_to_5/day_4.cpp
+    solutions/2024/days_1_to_5/day_4.h
     solutions/2024/days_1_to_5/day_5.cpp
     solutions/2024/days_1_to_5/day_5.h
 )

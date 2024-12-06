@@ -20,20 +20,20 @@ namespace solutions
         {{{0, 0}, 'A'}, {{1, 1}, 'S'}, {{-1, 1}, 'M'}, {{-1, -1}, 'M'}, {{1, -1}, 'S'}},
     };
 
-    bool is_word_xmas(utils::Array2D<char> word_search, const std::vector<utils::Vec2D<long long>>& vecs)
+    bool is_word_xmas(utils::Array2D<char> word_search, const std::vector<utils::Vec2D<long long>>& vector_of_vec2d)
     {
         const std::vector<char> characters{'X', 'M', 'A', 'S'};
 
         for (size_t i{0}; i < characters.size(); ++i)
         {
-            if (not word_search.vector_in_array(vecs[i]))
+            if (not word_search.vector_in_array(vector_of_vec2d[i]))
             {
-                std::cout << "Vector: " << vecs[i] << " out of bounds." << std::endl;
+                std::cout << "Vector: " << vector_of_vec2d[i] << " out of bounds." << std::endl;
                 return false;
             }
 
-            const auto x_val = static_cast<size_t>(vecs[i].x);
-            const auto y_val = static_cast<size_t>(vecs[i].y);
+            const auto x_val = static_cast<size_t>(vector_of_vec2d[i].x);
+            const auto y_val = static_cast<size_t>(vector_of_vec2d[i].y);
 
             if (word_search.at(x_val, y_val) != characters[i])
             {
@@ -54,7 +54,7 @@ namespace solutions
 
         for (const auto& [directions, vecs] : directions)
         {
-            std::vector<utils::Vec2D<long long>> locations(vecs.size());
+            std::vector<utils::Vec2D<long long>> locations;
             std::cout << "Looking applying " << directions << " vector adjustments: " << vecs << " to: " <<
                 pos_neg_start << std::endl;
             std::transform(
@@ -94,37 +94,32 @@ namespace solutions
 
         for (auto vector_char_map : cross_mass_types)
         {
-            std::vector<std::pair<utils::Vec2D<long long>, char>> locations_and_char_vec(vector_char_map.size());
+            std::vector<std::pair<utils::Vec2D<long long>, char>> locations_and_char_vec{};
             std::cout << "Applying " << vector_char_map << " to: " << pos_neg_start << std::endl;
-            std::transform(
-                vector_char_map.begin(),
-                vector_char_map.end(),
+            std::ranges::transform(
+                vector_char_map,
                 locations_and_char_vec.begin(),
-                [pos_neg_start](auto vec_char)
-                {
-                    utils::Vec2D<long long> pos_vec {pos_neg_start + vec_char.first};
+                [pos_neg_start](auto vec_char){
+                    const utils::Vec2D<long long> pos_vec {pos_neg_start + vec_char.first};
                     std::pair<utils::Vec2D<long long>, char> output_pair {pos_vec, vec_char.second};
                     return output_pair;
-                }
+                    }
             );
             std::cout << "Checking if all locations are in array: " << locations_and_char_vec << std::endl;
-            const bool vectors_in_array = std::all_of(
-                locations_and_char_vec.begin(),
-                locations_and_char_vec.end(),
+            const bool vectors_in_array = std::ranges::all_of(
+                locations_and_char_vec,
                 [word_search](const auto& vec_char) { return word_search.vector_in_array(vec_char.first); }
             );
             std::cout << "Results: " << vectors_in_array << std::endl;
 
             if (vectors_in_array)
             {
-                const bool matches_cross = std::all_of(
-                locations_and_char_vec.begin(),
-                locations_and_char_vec.end(),
-                    [word_search](auto vec_and_char)
-                    {
-                        auto val_at = word_search.at(vec_and_char.first.x, vec_and_char.first.y);
-                        return val_at == vec_and_char.second;
-                    }
+                const bool matches_cross = std::ranges::all_of(
+                    locations_and_char_vec,
+                        [word_search](auto vec_and_char){
+                            auto val_at = word_search.at(vec_and_char.first.x, vec_and_char.first.y);
+                            return val_at == vec_and_char.second;
+                        }
                 );
                 if (matches_cross) { return true; }
 
@@ -151,7 +146,7 @@ namespace solutions
     {
         const utils::Array2D<char> word_search{input.string_vector()};
         std::cout << word_search << std::endl;
-        auto xmas_count = count_xmas(word_search);
+        const auto xmas_count = count_xmas(word_search);
         return xmas_count;
     }
 
@@ -159,7 +154,7 @@ namespace solutions
     {
         const utils::Array2D<char> word_search{input.string_vector()};
         std::cout << word_search << std::endl;
-        auto cross_mass_count = count_cross_mass(word_search);
+        const auto cross_mass_count = count_cross_mass(word_search);
         return cross_mass_count;
     }
 }

@@ -12,4 +12,4 @@
 #include "array_template.h"
 #include "array_iterators.h"
 #include "input_reader.h"
-#include "solution.h"
+#include "solution_tools.h"
