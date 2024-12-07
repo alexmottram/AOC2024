@@ -12,7 +12,7 @@ namespace solutions
         static constexpr long long EXPECTED_TEST_A{3749};
         static constexpr long long EXPECTED_SOLUTION_A{3245122495150};
         static constexpr long long EXPECTED_TEST_B{11387};
-        static constexpr long long EXPECTED_SOLUTION_B{0};
+        static constexpr long long EXPECTED_SOLUTION_B{1};
 
         long long solve_part_a(utils::InputReader input_reader) override;
         long long solve_part_b(utils::InputReader input_reader) override;
