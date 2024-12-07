@@ -4,45 +4,28 @@
 #include "../../utils/utils.h"
 #include "all_solutions.h"
 
-int YEAR{2024};
-int TEST_DAY{5};
-
 TEST_SUITE_BEGIN("AOC 2024");
 
-TEST_CASE("AOC 2024 Part A tests.")
+solutions::Day6Solution solution{};
+
+TEST_CASE("AOC 2024 part A tests.")
 {
-    constexpr bool is_test{true};
-    const utils::InputReader data{TEST_DAY, YEAR, is_test};
-    auto part_a = solutions::day_5_part_a(data);
-    utils::print_solution_part("A", TEST_DAY, is_test, part_a);
-    CHECK(part_a==solutions::DAY_5_PART_A_TEST);
+    CHECK(solution.solution_part_a(true)==solution.EXPECTED_TEST_A);
 }
 
-TEST_CASE("AOC 2024 Part B tests.")
+TEST_CASE("AOC 2024 part A solution.")
 {
-    constexpr bool is_test{true};
-    const utils::InputReader data{TEST_DAY, YEAR, is_test};
-    auto part_b = solutions::day_5_part_b(data);
-    utils::print_solution_part("B", TEST_DAY, is_test, part_b);
-    CHECK(part_b==solutions::DAY_5_PART_B_TEST);
+    CHECK(solution.solution_part_a(false)==solution.EXPECTED_SOLUTION_A);
 }
 
-TEST_CASE("AOC 2024 Part A solution.")
+TEST_CASE("AOC 2024 part B tests.")
 {
-    constexpr bool is_test{false};
-    const utils::InputReader data{TEST_DAY, YEAR, is_test};
-    auto part_a = solutions::day_5_part_a(data);
-    utils::print_solution_part("A", TEST_DAY, is_test, part_a);
-    CHECK(part_a==solutions::DAY_5_PART_A_SOLUTION);
+    CHECK(solution.solution_part_b(true)==solution.EXPECTED_TEST_B);
 }
 
-TEST_CASE("AOC 2024 Part B solution.")
+TEST_CASE("AOC 2024 part B solution.")
 {
-    constexpr bool is_test{false};
-    const utils::InputReader data{TEST_DAY, YEAR, is_test};
-    auto part_b = solutions::day_5_part_b(data);
-    utils::print_solution_part("B", TEST_DAY, is_test, part_b);
-    CHECK(part_b==solutions::DAY_5_PART_B_SOLUTION);
+    CHECK(solution.solution_part_b(false)==solution.EXPECTED_SOLUTION_B);
 }
 
 TEST_SUITE_END;

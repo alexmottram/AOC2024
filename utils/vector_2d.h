@@ -16,10 +16,6 @@ namespace utils {
         Vec2D(const Vec2D<T>& t) = default;
         Vec2D& operator=(const Vec2D<T>& t) = default;
 
-        Vec2D(int x=0, int y=0) requires(std::is_same_v<long long, T>) :
-        x(1),  y(1) {
-            std::cout << "Called int to long long creator" << std::endl;
-        }
 
         Vec2D(const std::string& str_input, const std::string& delimiter)        {
             auto string_vec = utils::string_to_vector_type<T>(str_input,
@@ -30,6 +26,21 @@ namespace utils {
             }
             x = string_vec.at(0);
             y = string_vec.at(1);
+        }
+
+        explicit operator Vec2D<long long>() const
+        {
+            return Vec2D<long long>(x, y);
+        }
+
+        explicit operator Vec2D<size_t>() const
+        {
+            return Vec2D<size_t>(x, y);
+        }
+
+        explicit operator Vec2D<int>() const
+        {
+            return Vec2D<int>(x, y);
         }
 
         friend bool operator<(const Vec2D& lhs, const Vec2D& rhs)

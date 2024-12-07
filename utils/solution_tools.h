@@ -28,31 +28,36 @@ namespace utils
     class SolutionTemplate
     {
     public:
-        static constexpr int YEAR{0};
-        static constexpr int DAY{0};
+        int year;
+        int day;
 
-        static constexpr sol_T EXPECTED_TEST_A {0};
-        static constexpr sol_T EXPECTED_TEST_B {0};
-        static constexpr sol_T EXPECTED_SOLUTION_A {0};
-        static constexpr sol_T EXPECTED_SOLUTION_B {0};
+        sol_T EXPECTED_TEST_A{0};
+        sol_T EXPECTED_TEST_B{0};
+        sol_T EXPECTED_SOLUTION_A{0};
+        sol_T EXPECTED_SOLUTION_B{0};
+
+        SolutionTemplate(int year, int day):
+            year(year), day(day)
+        {
+        }
 
         virtual ~SolutionTemplate() = default;
 
-        sol_T solution_part_a(const bool is_test=false)
+        sol_T solution_part_a(const bool is_test = false)
         {
-            auto input_reader = get_input_reader(is_test);
+            const auto input_reader = get_input_reader(is_test);
             return solve_part_a(input_reader);
         };
 
-        sol_T solution_part_b(const bool is_test=false)
+        sol_T solution_part_b(const bool is_test = false)
         {
-            auto input_reader = get_input_reader(is_test);
+            const auto input_reader = get_input_reader(is_test);
             return solve_part_b(input_reader);
         };
 
-        [[nodiscard]] static InputReader get_input_reader(bool is_test=false)
+        [[nodiscard]] InputReader get_input_reader(bool is_test = false) const
         {
-            return {DAY, YEAR, is_test};
+            return {day, year, is_test};
         }
 
         virtual sol_T solve_part_a(InputReader input_reader) = 0;
@@ -70,5 +75,4 @@ namespace utils
     //     std::cout << "Hit test suite: " << std::endl;
     //     TEST_SUITE_END;
     // }
-
 }
