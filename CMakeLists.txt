@@ -42,6 +42,8 @@ set(solutions
     solutions/2024/days_1_to_5/day_6.h
     solutions/2024/days_1_to_5/day_7.cpp
     solutions/2024/days_1_to_5/day_7.h
+    solutions/2024/days_1_to_5/day_8.cpp
+    solutions/2024/days_1_to_5/day_8.h
 )
 
 set(all_solution_tests

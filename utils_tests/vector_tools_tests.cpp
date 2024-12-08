@@ -47,17 +47,51 @@ TEST_CASE("Testing 2d vector class Vec2D.")
     }
 }
 
+bool create_size_t_vec_from_ints()
+{
+    const int int_x{-6};
+    const int int_y{5};
+    utils::Vec2D<size_t> coord_conv_vector(int_x, int_y);
+    std::cout << "Conversion of coordinate vector occurred when it should have failed: "
+        << coord_conv_vector << std::endl;
+    return true;
+}
 
 TEST_CASE("Testing 2d vector class Vec2D conversions.")
 {
-    SUBCASE("Convert int to long long")
+    SUBCASE("Coordinate construction conversion - int to long long")
     {
-        int int_x {6};
-        int int_y {5};
-        utils::Vec2D<int> vec_int{6, 5};
+        int int_x{6};
+        int int_y{5};
         utils::Vec2D<long long> expected_vec_long_long{6, 5};
-        utils::Vec2D<long long> vec_long_long (int_x, int_y);
+        utils::Vec2D<long long> vec_long_long(int_x, int_y);
         CHECK(vec_long_long == expected_vec_long_long);
+    }
+
+
+    SUBCASE("Coordinate construction conversion - error from negative value int to size_t")
+    {
+        CHECK_THROWS(create_size_t_vec_from_ints());
+    }
+
+    SUBCASE("Static cast conversion - error thrown for int to size_t with negative values")
+    {
+        utils::Vec2D int_vec{-5, 6};
+        std::cout << "Checking error gets thrown by negative value in vector: "
+            << int_vec << std::endl;
+        CHECK_THROWS(static_cast<utils::Vec2D<size_t>>(int_vec));
+    }
+
+    SUBCASE("Static cast conversion - int to size_t with just positive values")
+    {
+        utils::Vec2D<int> int_vec{5, 6};
+        std::cout << "Casting compliant int vector to type size_t: "
+            << int_vec << std::endl;
+        auto cast_vec_b = static_cast<utils::Vec2D<size_t>>(int_vec);
+        std::cout << "Casting compliant int vector to type size_t: "
+            << cast_vec_b << std::endl;
+        CHECK(cast_vec_b.x == 5);
+        CHECK(cast_vec_b.y == 6);
     }
 }
 

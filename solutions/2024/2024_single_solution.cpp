@@ -6,7 +6,7 @@
 
 TEST_SUITE_BEGIN("AOC 2024");
 
-solutions::Day7Solution solution{};
+solutions::Day8Solution solution{};
 
 TEST_CASE("AOC 2024 part A tests.")
 {
