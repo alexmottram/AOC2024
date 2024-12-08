@@ -4,9 +4,9 @@
 
 namespace solutions {
 
-    long long day_1_part_a(const utils::InputReader& input)
+    long long Day1Solution::solve_part_a(const utils::InputReader& input_reader)
     {
-        std::vector<std::string> input_str = input.string_vector();
+        std::vector<std::string> input_str = input_reader.string_vector();
         std::vector<int> left_col;
         std::vector<int> right_col;
         long long diff {0};
@@ -32,9 +32,9 @@ namespace solutions {
         return diff;
     }
 
-    long long day_1_part_b(const utils::InputReader& input)
+    long long Day1Solution::solve_part_b(const utils::InputReader& input_reader)
     {
-        std::vector<std::string> input_str = input.string_vector();
+        std::vector<std::string> input_str = input_reader.string_vector();
         std::vector<int> left_col;
         std::vector<int> right_col;
         long long diff {0};
