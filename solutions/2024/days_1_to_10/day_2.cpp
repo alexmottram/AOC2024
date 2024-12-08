@@ -107,7 +107,7 @@ namespace solutions
     }
 
 
-    long long day_2_part_a(const utils::InputReader& input)
+    long long solve_part_a(const utils::InputReader& input)
     {
         auto input_str = input.string_vector();
         int safe_report_count{0};
@@ -129,7 +129,7 @@ namespace solutions
         return safe_report_count;
     }
 
-    long long day_2_part_b(const utils::InputReader& input)
+    long long solve_part_b(const utils::InputReader& input)
     {
         auto input_str = input.string_vector();
         int safe_report_count{0};

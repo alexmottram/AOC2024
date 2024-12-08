@@ -46,6 +46,10 @@ set(solutions
         solutions/2024/days_1_to_10/day_7.h
         solutions/2024/days_1_to_10/day_8.cpp
         solutions/2024/days_1_to_10/day_8.h
+        solutions/2024/days_1_to_10/day_9.cpp
+        solutions/2024/days_1_to_10/day_9.h
+        solutions/2024/days_1_to_10/day_10.cpp
+        solutions/2024/days_1_to_10/day_10.h
 )
 
 set(all_solution_tests
