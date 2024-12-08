@@ -2,13 +2,22 @@
 
 #include "../../utils/utils.h"
 
-namespace solutions{
-    constexpr long long DAY_X_PART_A_TEST {1};
-    constexpr long long DAY_X_PART_A_SOLUTION {1};
+namespace solutions
+{
+    class DayXSolution final : public utils::SolutionTemplate<long long>
+    {
+    public:
+        DayXSolution(): SolutionTemplate(
+            2024,
+            0,
+            1,
+            1,
+            1,
+            1
+            ) {}
 
-    constexpr long long DAY_X_PART_B_TEST {1};
-    constexpr long long DAY_X_PART_B_SOLUTION {1};
+        long long solve_part_a(const utils::InputReader& input_reader) override;
+        long long solve_part_b(const utils::InputReader& input_reader) override;
+    };
 
-    long long day_x_part_a(const utils::InputReader& input);
-    long long day_x_part_b(const utils::InputReader& input);
 }

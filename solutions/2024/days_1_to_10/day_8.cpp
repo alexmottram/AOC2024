@@ -126,7 +126,7 @@ namespace solutions
         return antinode_locations;
     }
 
-    long long Day8Solution::solve_part_a(const utils::InputReader input_reader)
+    long long Day8Solution::solve_part_a(const utils::InputReader& input_reader)
     {
         const utils::Array2D<char> town_map{input_reader.string_vector()};
         std::cout << "Town map: \n" << town_map << std::endl;
@@ -140,7 +140,7 @@ namespace solutions
         return static_cast<long long>(unique_locations.size());
     }
 
-    long long Day8Solution::solve_part_b(const utils::InputReader input_reader)
+    long long Day8Solution::solve_part_b(const utils::InputReader& input_reader)
     {
         const utils::Array2D<char> town_map{input_reader.string_vector()};
         std::cout << "Town map: \n" << town_map << std::endl;

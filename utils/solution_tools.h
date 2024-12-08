@@ -90,8 +90,8 @@ namespace utils
             return {DAY, YEAR, is_test};
         }
 
-        virtual sol_T solve_part_a(InputReader input_reader) = 0;
-        virtual sol_T solve_part_b(InputReader input_reader) = 0;
+        virtual sol_T solve_part_a(const InputReader& input_reader) = 0;
+        virtual sol_T solve_part_b(const InputReader& input_reader) = 0;
     };
 
 

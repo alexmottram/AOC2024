@@ -214,7 +214,7 @@ namespace solutions
     }
 
 
-    long long Day7Solution::solve_part_a(const utils::InputReader input_reader)
+    long long Day7Solution::solve_part_a(const utils::InputReader& input_reader)
     {
         const std::vector<Equation> all_equations = get_equations(input_reader);
         std::cout << "Loaded equations: \n" << all_equations << std::endl;
@@ -222,7 +222,7 @@ namespace solutions
         return score;
     }
 
-    long long Day7Solution::solve_part_b(const utils::InputReader input_reader)
+    long long Day7Solution::solve_part_b(const utils::InputReader& input_reader)
     {
         const std::vector<Equation> all_equations = get_equations(input_reader);
         std::cout << "Loaded equations: \n" << all_equations << std::endl;

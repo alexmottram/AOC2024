@@ -1,4 +1,5 @@
 #pragma once
+#include "day_x.h"
 #include "days_1_to_10/day_1.h"
 #include "days_1_to_10/day_2.h"
 #include "days_1_to_10/day_3.h"

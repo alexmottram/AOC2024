@@ -158,7 +158,7 @@ namespace solutions
         return get_layout;
     }
 
-    long long Day6Solution::solve_part_a(const utils::InputReader input_reader)
+    long long Day6Solution::solve_part_a(const utils::InputReader& input_reader)
     {
         const utils::Array2D<char> layout = get_layout(input_reader);
         std::cout << layout << std::endl;
@@ -171,7 +171,7 @@ namespace solutions
         return static_cast<long long>(locations_visited.size());
     }
 
-    long long Day6Solution::solve_part_b(const utils::InputReader input_reader)
+    long long Day6Solution::solve_part_b(const utils::InputReader& input_reader)
     {
         const utils::Array2D<char> layout = get_layout(input_reader);
         std::cout << layout << std::endl;

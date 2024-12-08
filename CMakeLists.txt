@@ -28,6 +28,8 @@ set(utils_unittests
 
 set(solutions
     solutions/2024/all_solutions.h
+        solutions/2024/day_x.cpp
+        solutions/2024/day_x.h
         solutions/2024/days_1_to_10/day_1.cpp
         solutions/2024/days_1_to_10/day_1.h
         solutions/2024/days_1_to_10/day_2.cpp
