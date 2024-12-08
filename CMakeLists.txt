@@ -28,22 +28,22 @@ set(utils_unittests
 
 set(solutions
     solutions/2024/all_solutions.h
-    solutions/2024/days_1_to_5/day_1.cpp
-    solutions/2024/days_1_to_5/day_1.h
-    solutions/2024/days_1_to_5/day_2.cpp
-    solutions/2024/days_1_to_5/day_2.h
-    solutions/2024/days_1_to_5/day_3.cpp
-    solutions/2024/days_1_to_5/day_3.h
-    solutions/2024/days_1_to_5/day_4.cpp
-    solutions/2024/days_1_to_5/day_4.h
-    solutions/2024/days_1_to_5/day_5.cpp
-    solutions/2024/days_1_to_5/day_5.h
-    solutions/2024/days_1_to_5/day_6.cpp
-    solutions/2024/days_1_to_5/day_6.h
-    solutions/2024/days_1_to_5/day_7.cpp
-    solutions/2024/days_1_to_5/day_7.h
-    solutions/2024/days_1_to_5/day_8.cpp
-    solutions/2024/days_1_to_5/day_8.h
+        solutions/2024/days_1_to_10/day_1.cpp
+        solutions/2024/days_1_to_10/day_1.h
+        solutions/2024/days_1_to_10/day_2.cpp
+        solutions/2024/days_1_to_10/day_2.h
+        solutions/2024/days_1_to_10/day_3.cpp
+        solutions/2024/days_1_to_10/day_3.h
+        solutions/2024/days_1_to_10/day_4.cpp
+        solutions/2024/days_1_to_10/day_4.h
+        solutions/2024/days_1_to_10/day_5.cpp
+        solutions/2024/days_1_to_10/day_5.h
+        solutions/2024/days_1_to_10/day_6.cpp
+        solutions/2024/days_1_to_10/day_6.h
+        solutions/2024/days_1_to_10/day_7.cpp
+        solutions/2024/days_1_to_10/day_7.h
+        solutions/2024/days_1_to_10/day_8.cpp
+        solutions/2024/days_1_to_10/day_8.h
 )
 
 set(all_solution_tests
