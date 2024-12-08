@@ -1,5 +1,4 @@
 #pragma once
-#pragma clang diagnostic ignored "-Woverloaded-shift-op-parentheses"
 #include "../doctest.h"
 
 
@@ -28,51 +27,72 @@ namespace utils
     class SolutionTemplate
     {
     public:
-        int year;
-        int day;
+        const int YEAR;
+        const int DAY;
 
-        sol_T EXPECTED_TEST_A{0};
-        sol_T EXPECTED_TEST_B{0};
-        sol_T EXPECTED_SOLUTION_A{0};
-        sol_T EXPECTED_SOLUTION_B{0};
+        const sol_T EXPECTED_TEST_A{0};
+        const sol_T EXPECTED_SOLUTION_A{0};
+        const sol_T EXPECTED_TEST_B{0};
+        const sol_T EXPECTED_SOLUTION_B{0};
 
-        SolutionTemplate(int year, int day):
-            year(year), day(day)
+        SolutionTemplate(
+            int year,
+            int day,
+            sol_T expected_test_A = 0,
+            sol_T expected_solution_A = 0,
+            sol_T expected_test_B = 0,
+            sol_T expected_solution_B = 0
+        ):
+            YEAR(year),
+            DAY(day),
+            EXPECTED_TEST_A(expected_test_A),
+            EXPECTED_SOLUTION_A(expected_solution_A),
+            EXPECTED_TEST_B(expected_test_B),
+            EXPECTED_SOLUTION_B(expected_solution_B)
         {
         }
 
         virtual ~SolutionTemplate() = default;
 
+        void print_solution_part(
+            const std::string& part,const bool is_test, sol_T solution)
+        {
+            std::cout << "Solution for day " << DAY << " part " << part;
+            if (is_test)
+            {
+                std::cout << " using test data: ";
+            }
+            else
+            {
+                std::cout << " using real data: ";
+            }
+            std::cout << solution << std::endl;
+        }
+
         sol_T solution_part_a(const bool is_test = false)
         {
             const auto input_reader = get_input_reader(is_test);
-            return solve_part_a(input_reader);
-        };
+            const auto solution =  solve_part_a(input_reader);
+            print_solution_part("A", is_test, solution);
+            return solution;
+        }
 
         sol_T solution_part_b(const bool is_test = false)
         {
             const auto input_reader = get_input_reader(is_test);
-            return solve_part_b(input_reader);
-        };
+            const auto solution =  solve_part_b(input_reader);
+            print_solution_part("B", is_test, solution);
+            return solution;
+        }
 
         [[nodiscard]] InputReader get_input_reader(bool is_test = false) const
         {
-            return {day, year, is_test};
+            return {DAY, YEAR, is_test};
         }
 
         virtual sol_T solve_part_a(InputReader input_reader) = 0;
         virtual sol_T solve_part_b(InputReader input_reader) = 0;
     };
 
-    // template<out_T>
-    // void run_test_suite(SolutionTemplate<out_T> SolTemplate)
-    // {
-    //     std::stringstream test_suite_sstring;
-    //     test_suite_sstring << "Test suite for year: " << SolTemplate::YEAR << " and day: " << solution_template::DAY;
-    //     std::string test_suite_string{test_suite_sstring.str()};
-    //     TEST_SUITE_BEGIN("Inside test suite for solution template");
-    //     CHECK(true);
-    //     std::cout << "Hit test suite: " << std::endl;
-    //     TEST_SUITE_END;
-    // }
+
 }

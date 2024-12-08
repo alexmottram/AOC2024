@@ -7,24 +7,25 @@ TEST_SUITE_BEGIN("Solution tools test suite.");
 class MySolution final : public utils::SolutionTemplate<int>
 {
 public:
-    MySolution(): SolutionTemplate(2024, 6)
+    MySolution(): SolutionTemplate(2050, 100, 25, 50, 42, 84)
     {
     }
 
-    int solve_part_a(utils::InputReader input_reader) override { return 6; }
-    int solve_part_b(utils::InputReader input_reader) override { return 2024; }
+    int solve_part_a(utils::InputReader input_reader) override { return 25; }
+    int solve_part_b(utils::InputReader input_reader) override { return 42; }
 };
 
 TEST_CASE("Implementing of solution class.")
 {
-    SUBCASE("Test properties of solution template")
+    SUBCASE("Test properties of solution template" + 1001)
     {
         MySolution my_sol{};
         auto part_a_val = my_sol.solution_part_a(true);
         auto part_b_val = my_sol.solution_part_b(true);
-        CHECK(part_a_val == 6);
-        CHECK(part_b_val == 2024);
+        CHECK(part_a_val == 25);
+        CHECK(part_b_val == 42);
     }
+
 }
 
 TEST_SUITE_END;
