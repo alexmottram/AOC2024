@@ -18,7 +18,4 @@ namespace solutions{
         long long solve_part_a(const utils::InputReader& input_reader) override;
         long long solve_part_b(const utils::InputReader& input_reader) override;
     };
-
-    long long day_2_part_a(const utils::InputReader& input);
-    long long day_2_part_b(const utils::InputReader& input);
 }

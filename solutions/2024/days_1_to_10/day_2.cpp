@@ -107,9 +107,9 @@ namespace solutions
     }
 
 
-    long long solve_part_a(const utils::InputReader& input)
+    long long Day2Solution::solve_part_a(const utils::InputReader& input_reader)
     {
-        auto input_str = input.string_vector();
+        auto input_str = input_reader.string_vector();
         int safe_report_count{0};
         for (const auto& report_str : input_str)
         {
@@ -129,9 +129,9 @@ namespace solutions
         return safe_report_count;
     }
 
-    long long solve_part_b(const utils::InputReader& input)
+    long long Day2Solution::solve_part_b(const utils::InputReader& input_reader)
     {
-        auto input_str = input.string_vector();
+        auto input_str = input_reader.string_vector();
         int safe_report_count{0};
         for (const auto& report_str : input_str)
         {
