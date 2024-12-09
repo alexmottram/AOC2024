@@ -13,6 +13,7 @@ set(utils
     utils/array_node_wrapper.h
     utils/array_iterators.h
     utils/array_template.h
+    utils/solution_tools.cpp utils/solution_tools.h
     )
 
 set(utils_unittests
@@ -22,22 +23,47 @@ set(utils_unittests
     utils_tests/string_tools_tests.cpp
     utils_tests/array_template_tests.cpp
     utils_tests/array_template_iterator_tests.cpp
-    utils_tests/array_template_node_iterator_tests.cpp)
+    utils_tests/array_template_node_iterator_tests.cpp
+    utils_tests/solution_tools_tests.cpp)
 
 set(solutions
     solutions/2024/all_solutions.h
-    solutions/2024/days_1_to_5/day_1.cpp
-    solutions/2024/days_1_to_5/day_1.h
-    solutions/2024/day_x.h
-    solutions/2024/day_x.cpp
+        solutions/2024/day_x.cpp
+        solutions/2024/day_x.h
+        solutions/2024/days_1_to_10/day_1.cpp
+        solutions/2024/days_1_to_10/day_1.h
+        solutions/2024/days_1_to_10/day_2.cpp
+        solutions/2024/days_1_to_10/day_2.h
+        solutions/2024/days_1_to_10/day_3.cpp
+        solutions/2024/days_1_to_10/day_3.h
+        solutions/2024/days_1_to_10/day_4.cpp
+        solutions/2024/days_1_to_10/day_4.h
+        solutions/2024/days_1_to_10/day_5.cpp
+        solutions/2024/days_1_to_10/day_5.h
+        solutions/2024/days_1_to_10/day_6.cpp
+        solutions/2024/days_1_to_10/day_6.h
+        solutions/2024/days_1_to_10/day_7.cpp
+        solutions/2024/days_1_to_10/day_7.h
+        solutions/2024/days_1_to_10/day_8.cpp
+        solutions/2024/days_1_to_10/day_8.h
+        solutions/2024/days_1_to_10/day_9.cpp
+        solutions/2024/days_1_to_10/day_9.h
+        solutions/2024/days_1_to_10/day_10.cpp
+        solutions/2024/days_1_to_10/day_10.h
 )
 
-set(solution_tests
+set(all_solution_tests
     doctest.h doctest.cpp
     solutions/2024/2024_solution_tests.cpp
+    )
+
+set(single_days_solution_tests
+    doctest.h doctest.cpp
+    solutions/2024/2024_single_solution.cpp
     )
 
 set(CMAKE_CXX_STANDARD 20)
 add_executable(AOC-Utils main.cpp "${utils}")
 add_executable(AOC-Utils-Tests "${utils}" "${utils_unittests}")
-add_executable(AOC-2024-Solutions "${utils}" "${solutions}" "${solution_tests}")
+add_executable(AOC-2024-All-Solutions "${utils}" "${solutions}" "${all_solution_tests}")
+add_executable(AOC-2024-Single-Solutions "${utils}" "${solutions}" "${single_days_solution_tests}")

@@ -4,62 +4,36 @@
 #include "../../utils/utils.h"
 #include "all_solutions.h"
 
-int YEAR{2024};
+TEST_SUITE_BEGIN("AOC 2024 All Solution Suite");
 
-TEST_SUITE_BEGIN("AOC 2024");
-
-template<typename solution_type>
-void print_part_a_solution(int day, bool is_test, solution_type solution)
+TEST_CASE_TEMPLATE_DEFINE("AOC 2024 part A tests template: ", T, STANDARD_TEST_CASE)
 {
-    std::cout << "Solution for day " << day << " part a ";
-    if (is_test) {
-        std::cout << "for test data: ";
+    T solution = T();
+    SUBCASE("Test solution for part A")
+    {
+        CHECK(solution.solution_part_a(true)==solution.EXPECTED_TEST_A);
     }
-    else {
-        std::cout << "for real data: ";
+    SUBCASE("Actual solution for part A")
+    {
+        CHECK(solution.solution_part_a(false)==solution.EXPECTED_SOLUTION_A);
     }
-    std::cout << solution << std::endl;
+    SUBCASE("Test solution for part B")
+    {
+        CHECK(solution.solution_part_b(true)==solution.EXPECTED_TEST_B);
+    }
+    SUBCASE("Actual solution for part B")
+    {
+        CHECK(solution.solution_part_b(false)==solution.EXPECTED_SOLUTION_B);
+    }
 }
 
-template<typename solution_type>
-void print_part_b_solution(int day, bool is_test, solution_type solution)
-{
-    std::cout << "Solution for day " << day << " part b ";
-    if (is_test) {
-        std::cout << "for test data: ";
-    }
-    else {
-        std::cout << "for real data: ";
-    }
-    std::cout << solution << std::endl;
-}
-
-TEST_CASE("AOC 2024 Day 1 tests.")
-{
-    int day{1};
-    bool is_test{true};
-    utils::InputReader data{day, YEAR, is_test};
-    auto part_a = solutions::day_1_part_a(data);
-    print_part_a_solution(day, is_test, part_a);
-    CHECK(part_a==209);
-
-    auto part_b = solutions::day_1_part_b(data);
-    print_part_b_solution(day, is_test, part_b);
-    CHECK(part_b==281);
-}
-
-TEST_CASE("AOC 2024 Day 1 solution.")
-{
-    int day{1};
-    bool is_test{false};
-    utils::InputReader data{day, YEAR, is_test};
-    auto part_a = solutions::day_1_part_a(data);
-    print_part_a_solution(day, is_test, part_a);
-    CHECK(part_a==55029);
-
-    auto part_b = solutions::day_1_part_b(data);
-    print_part_b_solution(day, is_test, part_b);
-    CHECK(part_b==55686);
-}
+TEST_CASE_TEMPLATE_INVOKE(STANDARD_TEST_CASE, solutions::Day1Solution);
+TEST_CASE_TEMPLATE_INVOKE(STANDARD_TEST_CASE, solutions::Day2Solution);
+TEST_CASE_TEMPLATE_INVOKE(STANDARD_TEST_CASE, solutions::Day3Solution);
+TEST_CASE_TEMPLATE_INVOKE(STANDARD_TEST_CASE, solutions::Day4Solution);
+TEST_CASE_TEMPLATE_INVOKE(STANDARD_TEST_CASE, solutions::Day5Solution);
+TEST_CASE_TEMPLATE_INVOKE(STANDARD_TEST_CASE, solutions::Day6Solution);
+TEST_CASE_TEMPLATE_INVOKE(STANDARD_TEST_CASE, solutions::Day7Solution);
+TEST_CASE_TEMPLATE_INVOKE(STANDARD_TEST_CASE, solutions::Day8Solution);
 
 TEST_SUITE_END;

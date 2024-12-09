@@ -26,7 +26,7 @@ namespace utils {
             std::ostream& os, const NodeWrapper<coord_type, value_type>& nw
         );
 
-        Vec2D<coord_type> vector() { return Vec2D<coord_type>{x, y}; };
+        Vec2D<coord_type> vector() const { return Vec2D<coord_type>{x, y}; };
 
         friend bool operator==(NodeWrapper<coord_type, value_type> const& lhs,
                 NodeWrapper<coord_type, value_type> const& rhs)
