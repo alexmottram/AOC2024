@@ -3,10 +3,10 @@
 #include "../../../utils/utils.h"
 
 namespace solutions{
-    class DayXSolution final : public utils::SolutionTemplate<long long>
+    class Day2Solution final : public utils::SolutionTemplate<long long>
     {
     public:
-        DayXSolution(): SolutionTemplate(
+        Day2Solution(): SolutionTemplate(
             2024,
             2,
             2,
