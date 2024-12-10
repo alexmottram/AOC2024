@@ -34,9 +34,11 @@ namespace utils
         typedef size_t size_type;
         typedef ptrdiff_t difference_type;
 
+
         using VecType = std::vector<value_type>;
         using DualVecType = std::vector<VecType>;
         using NodeType = NodeWrapper<size_type, value_type>;
+        using ConstNodeType = ConstNodeWrapper<size_type, value_type>;
 
         explicit Array2D(const DualVecType& input_data);
 
@@ -83,10 +85,17 @@ namespace utils
         }
 
         template <typename x_size_type, typename y_size_type>
-        NodeType node_at(x_size_type x, y_size_type y)
+        NodeType node_at(const x_size_type& x, const y_size_type& y)
         {
             reference val = at(x, y);
             return NodeType{val, static_cast<size_t>(x), static_cast<size_t>(y)};
+        }
+
+        template <typename x_size_type, typename y_size_type>
+        ConstNodeType const_node_at(const x_size_type& x, const y_size_type& y) const
+        {
+            const_reference val = at(x, y);
+            return ConstNodeType{val, static_cast<size_t>(x), static_cast<size_t>(y)};
         }
 
         reference at_index(size_t idx)
@@ -285,6 +294,11 @@ namespace utils
         NodeIterator<value_type, size_type> node_iter()
         {
             return NodeIterator<value_type, size_type>{&data, get_size_x()};
+        }
+
+        ConstNodeIterator<value_type, size_type> const_node_iter() const
+        {
+            return ConstNodeIterator<value_type, size_type>{&data, get_size_x()};
         }
 
         NodeRowIterator<value_type, size_type> node_row_iter()

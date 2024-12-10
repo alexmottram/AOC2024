@@ -94,6 +94,7 @@ TEST_CASE("Basic feature testing of node wrappers.")
         CHECK(node.x==1);
         CHECK(node.y==2);
     }
+
     SUBCASE("Modifying value in array using node wrapper.") {
         auto node = int_array.node_at(1, 2);
         CHECK(node.value==10);
@@ -102,14 +103,22 @@ TEST_CASE("Basic feature testing of node wrappers.")
         auto in_array_val = int_array.at(1, 2);
         CHECK(in_array_val==20);
     }
-    SUBCASE("Modifying value in array using node wrapper.") {
-        auto node = int_array.node_at(1, 2);
-        CHECK(node.value==10);
-        node.value = 20;
-        CHECK(node.value==20);
-        auto in_array_val = int_array.at(1, 2);
-        CHECK(in_array_val==20);
-    }
+
+	SUBCASE("Modifying value in array using node wrapper.") {
+		auto node = int_array.node_at(1, 2);
+		CHECK(node.value == 10);
+		node.value = 20;
+		CHECK(node.value == 20);
+		auto in_array_val = int_array.at(1, 2);
+		CHECK(in_array_val == 20);
+	}
+
+	SUBCASE("Checking that a constant node wrapper cannot modify a value.") {
+		auto node = int_array.const_node_at(1, 2);
+		CHECK(node.value == 10);
+//		node.value = 20; Should fail if the code is uncommented
+		CHECK(node.value == 10);
+	}
 }
 
 TEST_SUITE_END;

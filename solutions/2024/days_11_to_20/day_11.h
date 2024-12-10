@@ -4,16 +4,16 @@
 
 namespace solutions
 {
-    class Day10Solution final : public utils::SolutionTemplate<long long>
+    class Day11Solution final : public utils::SolutionTemplate<long long>
     {
     public:
-        Day10Solution(): SolutionTemplate(
+        Day11Solution(): SolutionTemplate(
             2024,
-            10,
-            36,
-            811,
-            81,
-            1794
+            11,
+            1,
+            1,
+            1,
+            1
             ) {}
 
         long long solve_part_a(const utils::InputReader& input_reader) override;
