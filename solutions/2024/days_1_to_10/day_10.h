@@ -10,9 +10,9 @@ namespace solutions
         Day10Solution(): SolutionTemplate(
             2024,
             10,
-            1,
-            1,
-            1,
+            36,
+            811,
+            81,
             1
             ) {}
 
