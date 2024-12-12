@@ -38,11 +38,12 @@ namespace utils
         using VecType = std::vector<value_type>;
         using DualVecType = std::vector<VecType>;
         using NodeType = NodeWrapper<size_type, value_type>;
-        using ConstNodeType = ConstNodeWrapper<size_type, value_type>;
 
         explicit Array2D(const DualVecType& input_data);
 
         explicit Array2D(const std::vector<std::string>& input_strings);
+
+        explicit Array2D(const size_type& x, const size_type& y, const value_type& value);
 
         template <typename x_size_type, typename y_size_type>
         reference at(x_size_type x, y_size_type y)
@@ -57,7 +58,7 @@ namespace utils
         }
 
         template <typename x_size_type, typename y_size_type>
-        value_type at(x_size_type x, y_size_type y) const
+        const_reference at(const x_size_type& x, const y_size_type& y) const
         {
             if (!coords_in_array(x, y))
             {
@@ -79,10 +80,17 @@ namespace utils
         }
 
         template <typename vec_size_type>
-        value_type at(Vec2D<vec_size_type> vec) const
+        const_reference at(const Vec2D<vec_size_type>& vec) const
         {
             return at(vec.x, vec.y);
         }
+
+//        template <typename x_size_type, typename y_size_type>
+//        NodeType node_at(const x_size_type& x, const y_size_type& y) const
+//        {
+//            const_reference val = at(x, y);
+//            return NodeType{val, static_cast<size_t>(x), static_cast<size_t>(y)};
+//        }
 
         template <typename x_size_type, typename y_size_type>
         NodeType node_at(const x_size_type& x, const y_size_type& y)
@@ -91,25 +99,18 @@ namespace utils
             return NodeType{val, static_cast<size_t>(x), static_cast<size_t>(y)};
         }
 
-        template <typename x_size_type, typename y_size_type>
-        ConstNodeType const_node_at(const x_size_type& x, const y_size_type& y) const
-        {
-            const_reference val = at(x, y);
-            return ConstNodeType{val, static_cast<size_t>(x), static_cast<size_t>(y)};
-        }
-
-        reference at_index(size_t idx)
+        reference at_index(const size_t& idx)
         {
             return data.at(idx);
         }
 
-        value_type at_index(size_t idx) const
+        const_reference at_index(const size_t& idx) const
         {
             return data.at(idx);
         }
 
         template <typename vec_size_type>
-        bool vector_in_array(const Vec2D<vec_size_type> vec) const
+        bool vector_in_array(const Vec2D<vec_size_type>& vec) const
         {
             return coords_in_array(vec.x, vec.y);
         }
@@ -154,7 +155,7 @@ namespace utils
             return found_nodes;
         }
 
-        std::set<NodeType> adjacent(const size_type x, const size_type y, const bool include_diagonals = false)
+        std::set<NodeType> adjacent (const size_type x, const size_type y, const bool include_diagonals = false)
         {
             std::set<NodeType> adjacent_nodes{};
             bool x_in_array = (x >= 0 && x < size_x);
@@ -216,22 +217,28 @@ namespace utils
             return adjacent_nodes;
         }
 
-        std::set<NodeType> adjacent(NodeType node, bool include_diagonals = false)
+        std::set<NodeType> adjacent(const NodeType& node, const bool include_diagonals = false)
         {
-            return adjacent(node.x, node.y, include_diagonals);
+            return adjacent(node.x(), node.y(), include_diagonals);
         }
 
-        [[nodiscard]] size_type coords_to_idx(const size_type x, const size_type y) const
+		template <typename vec_size_type>
+        std::set<NodeType> adjacent(const Vec2D<vec_size_type>& vec, const bool include_diagonals = false)
+        {
+            return adjacent(vec.x, vec.y, include_diagonals);
+        }
+
+        [[nodiscard]] size_type coords_to_idx(const size_type& x, const size_type& y) const
         {
             return (y * size_x) + x;
         }
 
-        [[nodiscard]] size_type index_to_x(const size_t index) const
+        [[nodiscard]] size_type index_to_x(const size_t& index) const
         {
             return index % size_y;
         }
 
-        [[nodiscard]] size_type index_to_y(const size_t index) const
+        [[nodiscard]] size_type index_to_y(const size_t& index) const
         {
             return index / size_y;
         }
@@ -296,11 +303,6 @@ namespace utils
             return NodeIterator<value_type, size_type>{&data, get_size_x()};
         }
 
-        ConstNodeIterator<value_type, size_type> const_node_iter() const
-        {
-            return ConstNodeIterator<value_type, size_type>{&data, get_size_x()};
-        }
-
         NodeRowIterator<value_type, size_type> node_row_iter()
         {
             return NodeRowIterator<value_type, size_type>{&data, get_size_x()};
@@ -346,6 +348,17 @@ namespace utils
             {
                 this->data.push_back(val);
             }
+        }
+    }
+
+    template <class T>
+    Array2D<T>::Array2D(const size_type& x, const size_type& y, const value_type& value)
+    {
+        this->size_y = y;
+        this->size_x = x;
+        for (auto i{0}; i < (x*y); i++)
+        {
+            this->data.push_back(value);
         }
     }
 

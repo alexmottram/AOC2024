@@ -15,7 +15,7 @@ namespace solutions {
 				adjacent_locs.end(),
 				std::inserter(valid_adj_nodes, valid_adj_nodes.begin()),
 				[current_node](auto new_node) {
-					return (new_node.value == (current_node.value + 1));
+					return (new_node.value() == (current_node.value() + 1));
 				}
 		);
 
@@ -34,7 +34,7 @@ namespace solutions {
 			bool all_trail_ends = std::all_of(
 					next_locs.begin(),
 					next_locs.end(),
-					[](auto loc) { return loc.value == 9; }
+					[](auto loc) { return loc.value() == 9; }
 			);
 			if (all_trail_ends) {
 				std::cout << "Hit trail end for head: " << trailhead
@@ -79,7 +79,7 @@ namespace solutions {
 		auto adjacent_locs = topographic_map.adjacent(current_node.first);
 
 		for (auto loc: adjacent_locs) {
-			if (loc.value == (current_node.first.value + 1)) {
+			if (loc.value() == (current_node.first.value() + 1)) {
 				valid_adj_nodes[loc] = current_node.second;
 			}
 		}
@@ -98,7 +98,7 @@ namespace solutions {
 			bool all_trail_ends = std::all_of(
 					next_locs.begin(),
 					next_locs.end(),
-					[](auto loc) { return loc.first.value == 9; }
+					[](auto loc) { return loc.first.value() == 9; }
 			);
 			if (all_trail_ends) {
 				long long ratings = std::accumulate(

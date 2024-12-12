@@ -25,7 +25,6 @@ namespace utils
             {
                 throw std::runtime_error("Negative y value cannot be cast to size_t during coordinate conversion.");
             }
-            std::cout << "Called int to size_t creator" << std::endl;
             x = static_cast<size_t>(x_in);
             y = static_cast<size_t>(y_in);
         }
