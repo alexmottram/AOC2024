@@ -56,6 +56,20 @@ set(solutions
         solutions/2024/days_11_to_20/day_12.h
         solutions/2024/days_11_to_20/day_13.cpp
         solutions/2024/days_11_to_20/day_13.h
+        solutions/2024/days_11_to_20/day_14.cpp
+        solutions/2024/days_11_to_20/day_14.h
+        solutions/2024/days_11_to_20/day_15.cpp
+        solutions/2024/days_11_to_20/day_15.h
+        solutions/2024/days_11_to_20/day_16.cpp
+        solutions/2024/days_11_to_20/day_16.h
+        solutions/2024/days_11_to_20/day_17.cpp
+        solutions/2024/days_11_to_20/day_17.h
+        solutions/2024/days_11_to_20/day_18.cpp
+        solutions/2024/days_11_to_20/day_18.h
+        solutions/2024/days_11_to_20/day_19.cpp
+        solutions/2024/days_11_to_20/day_19.h
+        solutions/2024/days_11_to_20/day_20.cpp
+        solutions/2024/days_11_to_20/day_20.h
 )
 
 set(all_solution_tests
