@@ -10,8 +10,8 @@ namespace solutions {
 				13,
 				480,
 				33481,
-				1,
-				1
+				875318608908,
+				92572057880885
 		) {}
 
 		long long solve_part_a(const utils::InputReader &input_reader) override;
