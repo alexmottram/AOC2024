@@ -1,7 +1,5 @@
 #include "day_1.h"
 
-#include <ranges>
-
 namespace solutions {
 
     long long Day1Solution::solve_part_a(const utils::InputReader& input_reader)
@@ -14,8 +12,8 @@ namespace solutions {
         for (const auto& str : input_str)
         {
             std::vector<int> row_split = utils::string_to_vector_type<int>(str, " ");
-            left_col.push_back(row_split[0]);
-            right_col.push_back(row_split[1]);
+            left_col.push_back(row_split.at(0));
+            right_col.push_back(row_split.at(1));
         }
 
         std::sort(left_col.begin(), left_col.end());
@@ -26,7 +24,7 @@ namespace solutions {
 
         for (auto i{0}; i<left_col.size(); i++)
         {
-            diff += abs(left_col[i]- right_col[i]);
+            diff += abs(left_col.at(i)- right_col.at(i));
         }
 
         return diff;
@@ -42,8 +40,8 @@ namespace solutions {
         for (const auto& str : input_str)
         {
             std::vector<int> row_split = utils::string_to_vector_type<int>(str, " ");
-            left_col.push_back(row_split[0]);
-            right_col.push_back(row_split[1]);
+            left_col.push_back(row_split.at(0));
+            right_col.push_back(row_split.at(1));
         }
 
         std::map<int, int> right_col_map {};
@@ -52,7 +50,7 @@ namespace solutions {
         {
             if (right_col_map.contains(val))
             {
-                right_col_map[val]++;
+                right_col_map[val] += 1;
             } else
             {
                 right_col_map[val] = 1;
@@ -65,7 +63,7 @@ namespace solutions {
         {
             if (right_col_map.contains(l_val))
             {
-                const auto r_val = right_col_map[l_val];
+                const auto r_val = right_col_map.at(l_val);
                 std::cout << "Multiplying values: " << l_val << ", " << r_val << std::endl;
                 diff += (r_val*l_val);
             }

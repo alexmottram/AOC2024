@@ -151,7 +151,7 @@ namespace solutions {
 	}
 
 	long long Day14Solution::solve_part_b(const utils::InputReader &input_reader) {
-		long long num_moves{100000};
+		long long num_moves{70505};
 		std::vector<ToiletRobot> robots{};
 
 		for (const auto &line: input_reader.string_vector()) {

@@ -87,6 +87,9 @@ namespace utils
 
         [[nodiscard]] InputReader get_input_reader(bool is_test = false) const
         {
+			if (DAY == 0){
+				throw std::runtime_error("Day should not be 0.");
+			}
             return {DAY, YEAR, is_test};
         }
 

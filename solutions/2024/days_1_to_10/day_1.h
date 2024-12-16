@@ -8,7 +8,7 @@ namespace solutions{
     public:
         Day1Solution(): SolutionTemplate(
             2024,
-            0,
+            1,
             11,
             1110981,
             31,
