@@ -75,7 +75,7 @@ set(solutions
 set(all_solution_tests
     doctest.h doctest.cpp
     solutions/2024/2024_solution_tests.cpp
-    )
+        solutions/2024/common_header.h)
 
 set(single_days_solution_tests
     doctest.h doctest.cpp

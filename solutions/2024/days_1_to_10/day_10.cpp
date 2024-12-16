@@ -1,21 +1,21 @@
 #include "day_10.h"
 
 namespace solutions {
-	typedef utils::NodeWrapper<size_t, int> trail_node;
+	typedef utils::ConstNode<size_t, int> trail_node;
 
 	std::set<trail_node> valid_adjacent_locations(
-			trail_node &current_node,
-			utils::Array2D<int> &topographic_map
+			const trail_node &current_node,
+			const utils::Array2D<int>& topographic_map
 	) {
 		std::set<trail_node> valid_adj_nodes{};
-		auto adjacent_locs = topographic_map.adjacent(current_node);
+		auto adjacent_locs = topographic_map.const_adjacent(current_node);
 
 		std::copy_if(
 				adjacent_locs.begin(),
 				adjacent_locs.end(),
 				std::inserter(valid_adj_nodes, valid_adj_nodes.begin()),
 				[current_node](auto new_node) {
-					return (new_node.value() == (current_node.value() + 1));
+					return (new_node.value == (current_node.value + 1));
 				}
 		);
 
@@ -34,7 +34,7 @@ namespace solutions {
 			bool all_trail_ends = std::all_of(
 					next_locs.begin(),
 					next_locs.end(),
-					[](auto loc) { return loc.value() == 9; }
+					[](auto loc) { return loc.value == 9; }
 			);
 			if (all_trail_ends) {
 				std::cout << "Hit trail end for head: " << trailhead
@@ -62,7 +62,7 @@ namespace solutions {
 	long long find_all_trailhead_scores(utils::Array2D<int> &topographic_map) {
 
 		long long score{0};
-		std::set<trail_node> trailheads = topographic_map.find(0);
+		std::set<trail_node> trailheads = topographic_map.const_find(0);
 		for (auto trailhead: trailheads) {
 			std::cout << "Starting hike for trailhead: " << trailhead << std::endl;
 			std::cout << "Topographic map looks like: \n" << topographic_map << std::endl;
@@ -72,14 +72,14 @@ namespace solutions {
 	}
 
 	std::map<trail_node, size_t> rated_valid_adjacent_locations(
-			std::pair<const utils::NodeWrapper<unsigned long long int, int>, unsigned long long int> current_node,
-			utils::Array2D<int> &topographic_map
+			std::pair<const utils::ConstNode<unsigned long long int, int>, unsigned long long int> current_node,
+			const utils::Array2D<int> &topographic_map
 	) {
 		std::map<trail_node, size_t> valid_adj_nodes{};
-		auto adjacent_locs = topographic_map.adjacent(current_node.first);
+		auto adjacent_locs = topographic_map.const_adjacent(current_node.first);
 
 		for (auto loc: adjacent_locs) {
-			if (loc.value() == (current_node.first.value() + 1)) {
+			if (loc.value == (current_node.first.value + 1)) {
 				valid_adj_nodes[loc] = current_node.second;
 			}
 		}
@@ -90,7 +90,7 @@ namespace solutions {
 			trail_node &trailhead,
 			utils::Array2D<int> &topographic_map
 	) {
-		std::pair<trail_node &, size_t> start_loc{trailhead, 1};
+		std::pair<const utils::ConstNode<unsigned long long int, int>, unsigned long long int> start_loc{trailhead, 1};
 		auto next_locs = rated_valid_adjacent_locations(start_loc, topographic_map);
 
 		while (!next_locs.empty()) {
@@ -98,7 +98,7 @@ namespace solutions {
 			bool all_trail_ends = std::all_of(
 					next_locs.begin(),
 					next_locs.end(),
-					[](auto loc) { return loc.first.value() == 9; }
+					[](auto loc) { return loc.first.value == 9; }
 			);
 			if (all_trail_ends) {
 				long long ratings = std::accumulate(
@@ -118,8 +118,8 @@ namespace solutions {
 			std::map<trail_node, size_t> new_locations{};
 			for (auto loc: next_locs) {
 				auto connected_locs = rated_valid_adjacent_locations(loc, topographic_map);
-				for (auto connected_loc: connected_locs){
-					if (new_locations.contains(connected_loc.first)){
+				for (auto connected_loc: connected_locs) {
+					if (new_locations.contains(connected_loc.first)) {
 						new_locations[connected_loc.first] += connected_loc.second;
 					} else {
 						new_locations[connected_loc.first] = connected_loc.second;
@@ -135,7 +135,7 @@ namespace solutions {
 	long long find_all_trailhead_ratings(utils::Array2D<int> &topographic_map) {
 
 		long long rate{0};
-		std::set<trail_node> trailheads = topographic_map.find(0);
+		std::set<trail_node> trailheads = topographic_map.const_find(0);
 		for (auto trailhead: trailheads) {
 			std::cout << "Starting hike for trailhead: " << trailhead << std::endl;
 			std::cout << "Topographic map looks like: \n" << topographic_map << std::endl;

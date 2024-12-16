@@ -218,8 +218,8 @@ namespace solutions {
 	long long score_factory_map(FactoryMap factory_map) {
 		long long running_score{0};
 		for (auto node: factory_map.node_iter()) {
-			if (node.value() == 'O' or node.value() == '[') {
-				long long score = (100 * static_cast<long long>(node.y())) + static_cast<long long>(node.x());
+			if (node.value == 'O' or node.value == '[') {
+				long long score = (100 * static_cast<long long>(node.y)) + static_cast<long long>(node.x);
 				running_score += score;
 			}
 		}

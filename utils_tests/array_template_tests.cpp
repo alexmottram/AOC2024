@@ -97,7 +97,7 @@ TEST_CASE("Modification of values in array.")
 	}
 }
 
-std::set<utils::NodeWrapper<size_t, int>> get_const_adjacent(
+auto get_const_adjacent(
 		utils::Array2D<int> int_array, const size_t x, const size_t y
 ) {
 	auto val = int_array.adjacent(x, y);
@@ -111,7 +111,6 @@ TEST_CASE("Returning adjacent values.")
 			{5, 6,  7,  8},
 			{9, 10, 11, 12}
 	}};
-
 
 
 	SUBCASE("Reassigning value in the array.") {
@@ -132,34 +131,34 @@ TEST_CASE("Basic feature testing of node wrappers.")
 
 	SUBCASE("Reading from node wrapper.") {
 		auto node = int_array.node_at(1, 2);
-		CHECK(node.value() == 10);
-		CHECK(node.x() == 1);
-		CHECK(node.y() == 2);
+		CHECK(node.value == 10);
+		CHECK(node.x == 1);
+		CHECK(node.y == 2);
 	}
 
 	SUBCASE("Modifying value in array using node wrapper.") {
 		auto node = int_array.node_at(1, 2);
-		CHECK(node.value() == 10);
-		node.value() = 20;
-		CHECK(node.value() == 20);
+		CHECK(node.value == 10);
+		node.value = 20;
+		CHECK(node.value == 20);
 		auto in_array_val = int_array.at(1, 2);
 		CHECK(in_array_val == 20);
 	}
 
 	SUBCASE("Modifying value in array using node wrapper.") {
 		auto node = int_array.node_at(1, 2);
-		CHECK(node.value() == 10);
-		node.value() = 20;
-		CHECK(node.value() == 20);
+		CHECK(node.value == 10);
+		node.value = 20;
+		CHECK(node.value == 20);
 		auto in_array_val = int_array.at(1, 2);
 		CHECK(in_array_val == 20);
 	}
 
 	SUBCASE("Checking that a constant node wrapper cannot modify a value.") {
 		const auto node = int_array.node_at(1, 2);
-		CHECK(node.value() == 10);
-//		node.value() = 20; // Should fail if the code is uncommented
-		CHECK(node.value() == 10);
+		CHECK(node.value == 10);
+//		node.value = 20; // Should fail if the code is uncommented
+		CHECK(node.value == 10);
 	}
 }
 

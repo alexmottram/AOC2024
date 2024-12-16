@@ -5,6 +5,7 @@
 #include <sstream>
 #include <filesystem>
 #include <fstream>
+#include <type_traits>
 
 #include <tuple>
 #include <set>

@@ -12,7 +12,7 @@ namespace solutions {
 		SetVec2D next_locations{};
 
 		for (auto node: adj_locations) {
-			if (node.value() == location_char) {
+			if (node.value == location_char) {
 				next_locations.insert(node.vector());
 			}
 		}
@@ -57,7 +57,7 @@ namespace solutions {
 				// If we have already visited the location carry on.
 				continue;
 			}
-			auto current_char = node_wrapper.value();
+			auto current_char = node_wrapper.value;
 			auto plot_locations = percolate_from_location(node_wrapper.vector(), garden_map);
 			all_plots.emplace_back(current_char, plot_locations);
 

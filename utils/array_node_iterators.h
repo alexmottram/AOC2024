@@ -22,7 +22,7 @@ namespace utils {
 	template<typename value_type, typename size_type>
 	struct NodeIterator {
 		typedef std::vector<value_type> VecType;
-		typedef NodeWrapper<size_type, value_type> NodeType;
+		typedef RefNode<size_type, value_type> NodeType;
 
 		// Iterator constructors here...
 		NodeIterator(value_type *ptr, VecType *data_ptr, size_type idx, size_type row_size)
@@ -101,9 +101,9 @@ namespace utils {
 		const size_type row_size;
 	};
 
-	template<typename value_type, typename size_type>
+	template<class value_type, typename size_type>
 	struct NodeRow {
-		using NodeType = NodeWrapper<size_type, value_type>;
+		using NodeType = RefNode<size_type, value_type>;
 
 		// Iterator constructors here...
 		NodeRow(value_type *ptr, size_type y, size_type row_size)
@@ -138,11 +138,6 @@ namespace utils {
 			return a.m_ptr != b.m_ptr;
 		};
 
-//        friend std::ostream& operator << <T>(
-//        std::ostream& os,
-//        const Row<T>& r
-//        );
-
 		auto row_end() { return row_start + row_size; }
 
 		auto begin() { return NodeRow<value_type, size_type>(row_start, y, row_size); }
@@ -174,7 +169,7 @@ namespace utils {
 
 		NodeRow<value_type, size_type> operator*() const { return NodeRow<value_type, size_type>{m_ptr, y, row_size}; }
 
-		NodeRow<value_type, size_type> *operator->() { return NodeRow<value_type, size_type>{m_ptr, y, row_size}; }
+		NodeRow<value_type, size_type> operator->() { return NodeRow<value_type, size_type>{m_ptr, y, row_size}; }
 
 		// Prefix increment
 		NodeRow<value_type, size_type> operator++() {
@@ -201,12 +196,6 @@ namespace utils {
 		size_type max_y() const {
 			return (m_vector_ptr->size() / row_size) - 1;
 		}
-
-//        friend std::ostream& operator
-//        <<<T>(
-//        std::ostream& os,
-//        const RowIterator<T>& ri
-//        );
 
 		auto row_iterator_begin() {
 			return &(*m_vector_ptr->begin());

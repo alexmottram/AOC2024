@@ -35,17 +35,17 @@ namespace solutions {
 		auto y_middle = toilet_map.get_size_y() / 2;
 
 		for (auto node: toilet_map.node_iter()) {
-			if (node.x() < x_middle and node.y() < y_middle) {
-				top_left_score += node.value();
+			if (node.x < x_middle and node.y < y_middle) {
+				top_left_score += node.value;
 			}
-			if (node.x() > x_middle and node.y() < y_middle) {
-				top_right_score += node.value();
+			if (node.x > x_middle and node.y < y_middle) {
+				top_right_score += node.value;
 			}
-			if (node.x() < x_middle and node.y() > y_middle) {
-				bottom_left_score += node.value();
+			if (node.x < x_middle and node.y > y_middle) {
+				bottom_left_score += node.value;
 			}
-			if (node.x() > x_middle and node.y() > y_middle) {
-				bottom_right_score += node.value();
+			if (node.x > x_middle and node.y > y_middle) {
+				bottom_right_score += node.value;
 			}
 		}
 
@@ -60,7 +60,7 @@ namespace solutions {
 		SetVec2D next_locations{};
 
 		for (auto node: adj_locations) {
-			if (node.value() == location_char) {
+			if (node.value == location_char) {
 				next_locations.insert(node.vector());
 			}
 		}
@@ -97,7 +97,7 @@ namespace solutions {
 		SetVec2D visited_set{};
 
 		for (auto node: toilet_map.node_iter()) {
-			if (!visited_set.contains(node.vector()) and node.value()=='#') {
+			if (!visited_set.contains(node.vector()) and node.value=='#') {
 				auto set_of_nodes = xmas_percolate_from_location(node.vector(), toilet_map);
 				visited_set.insert(set_of_nodes.begin(), set_of_nodes.end());
 				xmas_tree_score = std::max(set_of_nodes.size(), xmas_tree_score);
