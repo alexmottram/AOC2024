@@ -47,6 +47,24 @@ std::ostream &operator<<(std::ostream &os, const std::vector <T> &v) {
 }
 
 template<typename T>
+std::ostream &operator<<(std::ostream &os, const std::list <T> &l) {
+	auto l_it = l.cbegin();
+	for (size_t i = 0; i < l.size(); ++i) {
+		if (i == 0) {
+			os << "(";
+		}
+		os << *l_it;
+		l_it++;
+		if (i != l.size() - 1) {
+			os << ", ";
+		} else {
+			os << ")";
+		}
+	}
+	return os;
+}
+
+template<typename T>
 std::ostream &operator<<(
 		std::ostream &os,
 		const std::vector <std::vector <T>> &v
