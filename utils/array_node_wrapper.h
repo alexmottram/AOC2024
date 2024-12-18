@@ -86,6 +86,8 @@ namespace utils {
 				const ConstNode<coord_type, value_type> &nw
 		);
 
+		Vec2D<coord_type> vector() const { return Vec2D<coord_type>{x, y}; };
+
 		friend bool operator==(
 				ConstNode<coord_type, value_type> const &lhs,
 				ConstNode<coord_type, value_type> const &rhs
