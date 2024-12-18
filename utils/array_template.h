@@ -136,11 +136,11 @@ namespace utils {
 			return found_nodes;
 		}
 
-		std::set<ConstNodeType> const_find(const_reference val) {
+		std::set<ConstNodeType> const_find(const_reference val) const {
 			std::set<ConstNodeType> found_nodes;
 			for (auto x_coord{0}; x_coord < size_x; x_coord++) {
 				for (auto y_coord{0}; y_coord < size_y; y_coord++) {
-					auto &val_at_coords = at(x_coord, y_coord);
+					const auto &val_at_coords = at(x_coord, y_coord);
 					if (val_at_coords == val) {
 						found_nodes.emplace(val_at_coords, x_coord, y_coord);
 					}
@@ -149,26 +149,47 @@ namespace utils {
 			return found_nodes;
 		}
 
-		std::set<RefNodeType> adjacent(const size_type x, const size_type y, const bool include_diagonals = false) {
-			std::set<RefNodeType> adjacent_nodes{};
+		RefNodeType find_unique(const_reference val) {
+			auto found_nodes = find(val);
+			if (found_nodes.size() == 1) {
+				for (auto node: found_nodes) {
+					return node;
+				}
+			}
+			throw std::runtime_error("Incorrect number of values in array for const_find_single.");
+		}
+
+		ConstNodeType const_find_unique(const_reference val) const {
+			auto found_nodes = const_find(val);
+			if (found_nodes.size() == 1) {
+				for (auto node: found_nodes) {
+					return node;
+				}
+			}
+			throw std::runtime_error("Incorrect number of values in array for const_find_single.");
+		}
+
+
+		std::vector<RefNodeType> adjacent(const size_type x, const size_type y, const bool include_diagonals = false) {
+			std::vector<RefNodeType> adjacent_nodes{};
 			bool x_in_array = x < size_x;
 			bool y_in_array = y < size_y;
 
 			// Left node
 			if (x > 0 && y_in_array) {
-				adjacent_nodes.emplace(node_at(x - 1, y));
+				adjacent_nodes.emplace_back(node_at(x - 1, y));
 			}
 			// Right node
 			if ((x < (size_x - 1)) && y_in_array) {
-				adjacent_nodes.emplace(node_at(x + 1, y));
+				adjacent_nodes.emplace_back(node_at(x + 1, y));
 			}
 			// Up node
 			if (y > 0 && x_in_array) {
-				adjacent_nodes.emplace(node_at(x, y - 1));
+				adjacent_nodes.emplace_back(node_at(x, y - 1));
 			}
 			// Down node
 			if ((y < (size_y - 1)) && x_in_array) {
-				adjacent_nodes.emplace(node_at(x, y + 1));
+				adjacent_nodes.emplace_back(node_at(x, y + 1));
 			}
 
 			if (include_diagonals) {
@@ -179,50 +200,50 @@ namespace utils {
 
 				// Up-Left node
 				if (up_in_array && left_in_array) {
-					adjacent_nodes.emplace(node_at(x - 1, y + 1));
+					adjacent_nodes.emplace_back(node_at(x - 1, y + 1));
 				}
 
 				// Up-Right node
 				if (up_in_array && right_in_array) {
-					adjacent_nodes.emplace(node_at(x + 1, y + 1));
+					adjacent_nodes.emplace_back(node_at(x + 1, y + 1));
 				}
 
 				// Down-Left node
 				if (down_in_array && left_in_array) {
-					adjacent_nodes.emplace(node_at(x - 1, y - 1));
+					adjacent_nodes.emplace_back(node_at(x - 1, y - 1));
 				}
 
 				// Down-Right node
 				if (down_in_array && right_in_array) {
-					adjacent_nodes.emplace(node_at(x + 1, y - 1));
+					adjacent_nodes.emplace_back(node_at(x + 1, y - 1));
 				}
 			}
 
 			return adjacent_nodes;
 		}
 
-		std::set<ConstNodeType> const_adjacent(
+		std::vector<ConstNodeType> const_adjacent(
 				const size_type x, const size_type y, const bool include_diagonals = false
 		) const {
-			std::set<ConstNodeType> adjacent_nodes{};
+			std::vector<ConstNodeType> adjacent_nodes{};
 			bool x_in_array = x < size_x;
 			bool y_in_array = y < size_y;
 
 			// Left node
 			if (x > 0 && y_in_array) {
-				adjacent_nodes.emplace(const_node_at(x - 1, y));
+				adjacent_nodes.emplace_back(const_node_at(x - 1, y));
 			}
 			// Right node
 			if ((x < (size_x - 1)) && y_in_array) {
-				adjacent_nodes.emplace(const_node_at(x + 1, y));
+				adjacent_nodes.emplace_back(const_node_at(x + 1, y));
 			}
 			// Up node
 			if (y > 0 && x_in_array) {
-				adjacent_nodes.emplace(const_node_at(x, y - 1));
+				adjacent_nodes.emplace_back(const_node_at(x, y - 1));
 			}
 			// Down node
 			if ((y < (size_y - 1)) && x_in_array) {
-				adjacent_nodes.emplace(const_node_at(x, y + 1));
+				adjacent_nodes.emplace_back(const_node_at(x, y + 1));
 			}
 
 			if (include_diagonals) {
@@ -233,22 +254,22 @@ namespace utils {
 
 				// Up-Left node
 				if (up_in_array && left_in_array) {
-					adjacent_nodes.emplace(const_node_at(x - 1, y + 1));
+					adjacent_nodes.emplace_back(const_node_at(x - 1, y + 1));
 				}
 
 				// Up-Right node
 				if (up_in_array && right_in_array) {
-					adjacent_nodes.emplace(const_node_at(x + 1, y + 1));
+					adjacent_nodes.emplace_back(const_node_at(x + 1, y + 1));
 				}
 
 				// Down-Left node
 				if (down_in_array && left_in_array) {
-					adjacent_nodes.emplace(const_node_at(x - 1, y - 1));
+					adjacent_nodes.emplace_back(const_node_at(x - 1, y - 1));
 				}
 
 				// Down-Right node
 				if (down_in_array && right_in_array) {
-					adjacent_nodes.emplace(const_node_at(x + 1, y - 1));
+					adjacent_nodes.emplace_back(const_node_at(x + 1, y - 1));
 				}
 			}
 
@@ -256,29 +277,31 @@ namespace utils {
 		}
 
 		template<typename vec_size_type>
-		std::set<RefNodeType> adjacent(const Vec2D<vec_size_type> &vec, const bool include_diagonals = false) {
+		std::vector<RefNodeType> adjacent(const Vec2D<vec_size_type> &vec, const bool include_diagonals = false) {
 			return adjacent(vec.x, vec.y, include_diagonals);
 		}
 
 		template<typename vec_size_type>
-		std::set<ConstNodeType> const_adjacent(
+		std::vector<ConstNodeType> const_adjacent(
 				const Vec2D<vec_size_type> &vec, const bool include_diagonals = false
 		) const {
 			return const_adjacent(vec.x, vec.y, include_diagonals);
 		}
 
-		std::set<RefNodeType> adjacent(const RefNodeType &node, const bool include_diagonals = false) {
+		std::vector<RefNodeType> adjacent(const RefNodeType &node, const bool include_diagonals = false) {
 			return adjacent(node.x, node.y, include_diagonals);
 		}
 
-		std::set<RefNodeType> adjacent(const ConstNodeType &node, const bool include_diagonals = false) {
+		std::vector<RefNodeType> adjacent(const ConstNodeType &node, const bool include_diagonals = false) {
 			return adjacent(node.x, node.y, include_diagonals);
 		}
 
-		std::set<ConstNodeType> const_adjacent(const RefNodeType &node, const bool include_diagonals = false) const {
+		std::vector<ConstNodeType> const_adjacent(const RefNodeType &node, const bool include_diagonals = false) const {
 			return const_adjacent(node.x, node.y, include_diagonals);
 		}
-		std::set<ConstNodeType> const_adjacent(const ConstNodeType &node, const bool include_diagonals = false) const {
+
+		std::vector<ConstNodeType>
+		const_adjacent(const ConstNodeType &node, const bool include_diagonals = false) const {
 			return const_adjacent(node.x, node.y, include_diagonals);
 		}
 

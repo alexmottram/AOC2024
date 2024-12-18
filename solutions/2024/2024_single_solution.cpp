@@ -4,7 +4,7 @@
 #include "../../utils/utils.h"
 #include "all_solutions.h"
 
-typedef solutions::Day18Solution CurrentSolution;
+typedef solutions::Day16Solution CurrentSolution;
 
 TEST_SUITE_BEGIN("AOC 2024 Single Solution Suite");
 

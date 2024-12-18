@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../../utils/utils.h"
+#include "common_header.h"
 
 namespace solutions
 {
