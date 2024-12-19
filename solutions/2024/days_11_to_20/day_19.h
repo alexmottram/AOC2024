@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../../../utils/utils.h"
+#include "../common_header.h"
 
 namespace solutions
 {
@@ -10,9 +11,9 @@ namespace solutions
         Day19Solution(): SolutionTemplate(
             2024,
             19,
-            1,
-            1,
-            1,
+            6,
+            308,
+            16,
             1
             ) {}
 
