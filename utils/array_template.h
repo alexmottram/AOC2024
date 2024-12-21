@@ -370,6 +370,10 @@ namespace utils {
 			return NodeIterator<value_type, size_type>{&data, get_size_x()};
 		}
 
+		ConstNodeIterator<value_type, size_type> const_node_iter() const {
+			return ConstNodeIterator<value_type, size_type>{&data, get_size_x()};
+		}
+
 		NodeRowIterator<value_type, size_type> node_row_iter() {
 			return NodeRowIterator<value_type, size_type>{&data, get_size_x()};
 		}

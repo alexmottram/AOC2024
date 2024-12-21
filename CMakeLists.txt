@@ -70,6 +70,16 @@ set(solutions
         solutions/2024/days_11_to_20/day_19.h
         solutions/2024/days_11_to_20/day_20.cpp
         solutions/2024/days_11_to_20/day_20.h
+        solutions/2024/days_21_to_25/day_21.cpp
+        solutions/2024/days_21_to_25/day_21.h
+        solutions/2024/days_21_to_25/day_22.cpp
+        solutions/2024/days_21_to_25/day_22.h
+        solutions/2024/days_21_to_25/day_23.cpp
+        solutions/2024/days_21_to_25/day_23.h
+        solutions/2024/days_21_to_25/day_24.cpp
+        solutions/2024/days_21_to_25/day_24.h
+        solutions/2024/days_21_to_25/day_25.cpp
+        solutions/2024/days_21_to_25/day_25.h
 )
 
 set(all_solution_tests

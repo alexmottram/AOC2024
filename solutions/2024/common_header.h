@@ -7,6 +7,7 @@ namespace solutions
 	typedef utils::Array2D<char> CharArray;
 	typedef utils::Array2D<int> IntArray;
 	typedef utils::Array2D<size_t> SizeTArray;
+	typedef utils::Array2D<long long> LlArray;
 
 	typedef utils::Vec2D<long long> LlVec2D;
 	typedef utils::Vec2D<size_t> SizeTVec2D;

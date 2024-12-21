@@ -20,3 +20,8 @@
 #include "days_11_to_20/day_18.h"
 #include "days_11_to_20/day_19.h"
 #include "days_11_to_20/day_20.h"
+#include "days_21_to_25/day_21.h"
+#include "days_21_to_25/day_22.h"
+#include "days_21_to_25/day_23.h"
+#include "days_21_to_25/day_24.h"
+#include "days_21_to_25/day_25.h"

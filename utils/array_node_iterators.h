@@ -11,6 +11,8 @@ namespace utils {
 	template<typename value_type, typename size_type>
 	struct NodeIterator;
 	template<typename value_type, typename size_type>
+	struct ConstNodeIterator;
+	template<typename value_type, typename size_type>
 	struct NodeRow;
 	template<typename value_type, typename size_type>
 	struct NodeRowIterator;
@@ -97,6 +99,92 @@ namespace utils {
 	private:
 		value_type *m_ptr;
 		VecType *data_ptr;
+		size_type index;
+		const size_type row_size;
+	};
+
+	// Forward assign operators (mainly ostream)
+	template<typename value_type, typename size_type>
+	std::ostream &operator<<(std::ostream &os, const ConstNodeIterator<value_type, size_type> &r);
+
+	template<typename value_type, typename size_type>
+	struct ConstNodeIterator {
+		typedef std::vector<value_type> VecType;
+		typedef ConstNode<size_type, value_type> ConstNodeType;
+
+		// Iterator constructors here...
+		ConstNodeIterator(value_type const *ptr, VecType const *data_ptr, size_type idx, size_type row_size)
+				: m_ptr(ptr), data_ptr(data_ptr), index(idx), row_size(row_size) {}
+
+		ConstNodeIterator(VecType const *data_ptr, size_type const row_size)
+				: m_ptr(&(*data_ptr->cbegin())), data_ptr(data_ptr), index(0), row_size(row_size) {}
+
+		ConstNodeType operator*() const { return ConstNodeType{*m_ptr, x(), y()}; }
+
+		ConstNodeType operator->() { return ConstNodeType{*m_ptr, x(), y()}; }
+
+		// Prefix increment
+		ConstNodeIterator<value_type, size_type> &operator++() {
+			m_ptr++;
+			index++;
+			return *this;
+		}
+
+		// Postfix increment
+		ConstNodeIterator<value_type, size_type> operator++(int) {
+			ConstNodeIterator<value_type, size_type> tmp{m_ptr, data_ptr, index, row_size};
+			++(*this);
+			return tmp;
+		}
+
+		friend bool operator==(const ConstNodeIterator &a, const ConstNodeIterator &b) {
+			return a.m_ptr == b.m_ptr;
+		};
+
+		friend bool operator!=(const ConstNodeIterator &a, const ConstNodeIterator &b) {
+			return a.m_ptr != b.m_ptr;
+		};
+
+		friend std::ostream &operator<<<value_type, size_type>(
+				std::ostream &os,
+				const ConstNodeIterator<value_type, size_type> &r
+		);
+
+		[[nodiscard]] size_type x() const {
+			return index % row_size;
+		}
+
+		[[nodiscard]] size_type y() const {
+			return index / row_size;
+		}
+
+		auto begin() {
+			return ConstNodeIterator<value_type, size_type>(
+					&(*data_ptr->begin()), data_ptr, 0, row_size
+			);
+		}
+
+		auto end() {
+			return ConstNodeIterator<value_type, size_type>(
+					&(*data_ptr->end()), data_ptr, data_ptr->size(), row_size
+			);
+		}
+
+		auto begin() const {
+			return ConstNodeIterator<value_type, size_type>(
+					&(*data_ptr->begin()), data_ptr, 0, row_size
+			);
+		}
+
+		auto end() const {
+			return ConstNodeIterator<value_type, size_type>(
+					&(*data_ptr->end()), data_ptr, data_ptr->size(), row_size
+			);
+		}
+
+	private:
+		value_type const *m_ptr;
+		VecType const *data_ptr;
 		size_type index;
 		const size_type row_size;
 	};
