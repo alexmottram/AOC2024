@@ -11,7 +11,7 @@ namespace solutions
         Day22Solution(): SolutionTemplate(
             2024,
             22,
-            1,
+            37327623,
             1,
             1,
             1
