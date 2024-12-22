@@ -14,7 +14,7 @@ namespace solutions
             37327623,
             16894083306,
             23,
-            1
+            1925
             ) {}
 
         long long solve_part_a(const utils::InputReader& input_reader) override;
