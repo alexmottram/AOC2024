@@ -23,8 +23,17 @@ namespace utils
 		std::stringstream ss{ s };
 		T t;
 		ss >> t;
+
+		// Check if the conversion failed or if there are leftover characters
+	    if (ss.fail() || !ss.eof())
+	    {
+	        throw std::invalid_argument("Invalid input: " + s);
+	    }
 		return t;
 	}
+
+	template<>
+	char string_to_type<char>(const std::string& s);
 
 	template<>
 	std::string string_to_type<std::string>(const std::string& s);

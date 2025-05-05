@@ -54,25 +54,24 @@ TEST_CASE("Testing string_to_type function.")
 		CHECK(utils::string_to_type<std::string>(input_str) == output_str);
 	}
 
-	SUBCASE("String to char.")
+	SUBCASE("Numerical string to integer numerical types.")
 	{
-		std::string input_str{ "      text   " };
-		char output_char{ 't' };
-		CHECK(utils::string_to_type<char>(input_str) == output_char);
-	}
-
-	SUBCASE("Numerical string to numerical types.")
-	{
-		std::string input_str{ "123.6" };
+		std::string input_str{ "123" };
 		int int_num = 123;
-		float float_num = 123.6;
-		double double_num = 123.6;
 		size_t size_t_num = 123;
 
 		CHECK(utils::string_to_type<int>(input_str) == int_num);
+		CHECK(utils::string_to_type<size_t>(input_str) == size_t_num);
+	}
+
+	SUBCASE("Numerical string to floating point numerical types.")
+	{
+		std::string input_str{ "456.6" };
+		float float_num = 456.6;
+		double double_num = 456.6;
+
 		CHECK(utils::string_to_type<float>(input_str) == float_num);
 		CHECK(utils::string_to_type<double>(input_str) == double_num);
-		CHECK(utils::string_to_type<size_t>(input_str) == size_t_num);
 	}
 }
 TEST_CASE("Testing string_to_vector_type function.")
@@ -97,24 +96,56 @@ TEST_CASE("Testing string_to_vector_type function.")
 
 	SUBCASE("String to vector of chars.")
 	{
-		std::string input_str{ "      t , e,x, t   " };
+		std::string input_str{ "text" };
+		std::vector<char> output_char{ 't', 'e', 'x', 't' };
+		CHECK(utils::string_to_vector_type<char>(input_str) == output_char);
+	}
+
+	SUBCASE("String to vector of chars with comma delimiter.")
+	{
+		std::string input_str{ "t,e,x,t" };
 		std::vector<char> output_char{ 't', 'e', 'x', 't' };
 		CHECK(utils::string_to_vector_type<char>(input_str, ",") == output_char);
 	}
 
-	SUBCASE("Numerical string to numerical types.")
+	SUBCASE("Numerical string to integer numerical types.")
 	{
-		std::string input_str{ "123,  5.6" };
+		std::string input_str{ "123,  5" };
 		std::vector<int> int_num{ 123, 5 };
-		std::vector<float> float_num{ 123.0, 5.6 };
-		std::vector<double> double_num{ 123.0, 5.6 };
 		std::vector<size_t> size_t_num{ 123, 5 };
 
 		CHECK(utils::string_to_vector_type<int>(input_str, ",") == int_num);
-		CHECK(utils::string_to_vector_type<float>(input_str, ",") == float_num);
-		CHECK(utils::string_to_vector_type<double>(input_str, ",") == double_num);
 		CHECK(utils::string_to_vector_type<size_t>(input_str, ",") == size_t_num);
 	}
+
+	SUBCASE("Numerical string to floating point numerical types.")
+	{
+		std::string input_str{ "123,  5.6" };
+		std::vector<float> float_num{ 123.0, 5.6 };
+		std::vector<double> double_num{ 123.0, 5.6 };
+
+		CHECK(utils::string_to_vector_type<float>(input_str, ",") == float_num);
+		CHECK(utils::string_to_vector_type<double>(input_str, ",") == double_num);
+	}
+
+    SUBCASE("Invalid numerical string to int.")
+    {
+        std::string invalid_input{ "abc" };
+        CHECK_THROWS_AS(utils::string_to_type<int>(invalid_input), std::invalid_argument);
+    }
+
+    SUBCASE("Invalid numerical string to float.")
+    {
+        std::string invalid_input{ "12.3abc" };
+        CHECK_THROWS_AS(utils::string_to_type<float>(invalid_input), std::invalid_argument);
+    }
+
+    SUBCASE("Empty string to numerical type.")
+    {
+        std::string empty_input{ "" };
+        CHECK_THROWS_AS(utils::string_to_type<int>(empty_input), std::invalid_argument);
+    }
+
 }
 
 TEST_SUITE_END;

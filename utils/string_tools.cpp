@@ -74,6 +74,16 @@ namespace utils
 	}
 
 	template<>
+	char string_to_type<char>(const std::string& s)
+	{
+	    if (s.size() != 1)
+	    {
+	        throw std::invalid_argument("Invalid input for char: " + s);
+	    }
+	    return s[0];
+	}
+
+	template<>
 	std::string string_to_type<std::string>(const std::string& s)
 	{
 		std::stringstream ss{ s };

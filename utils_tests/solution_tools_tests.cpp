@@ -23,7 +23,7 @@ public:
 
 TEST_CASE("Implementing of solution class.")
 {
-	SUBCASE("Test properties of solution template" + 1001) {
+	SUBCASE("Test properties of solution template") {
 		MySolution my_sol{};
 		auto part_a_val = my_sol.solution_part_a(true);
 		auto part_b_val = my_sol.solution_part_b(true);
